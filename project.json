@@ -1,0 +1,14 @@
+{
+  "name": "Attendance Framework UAF",
+  "description": "Robotic Enterprise Framework",
+  "main": "Main.xaml",
+  "dependencies": {},
+  "excludedData": [
+    "Private:*",
+    "*password*"
+  ],
+  "toolVersion": "18.2",
+  "projectVersion": "1.0.6767.22115",
+  "packOptions": {},
+  "runtimeOptions": {}
+}

@@ -57,12 +57,14 @@
   </TextExpression.ReferencesForImplementation>
   <Sequence sap2010:Annotation.AnnotationText="Description: Here all working processes will be killed&#xA;&#xA;Pre Condition: N/A&#xA;Post Condtion: N/A" DisplayName="Kill Processes" sap2010:WorkflowViewState.IdRef="Sequence_2">
     <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="Killing processes..." />
-    <sads:DebugSymbol.Symbol>d3NDOlxVc2Vyc1xtaWhhaS5kdW5hcmVhbnVcR29vZ2xlIERyaXZlXFdvcmtzcGFjZVxVaVBhdGhcVGVtcGxhdGVzXFVpUGF0aF9SRUZyYW1ld29ya1xGcmFtZXdvcmtcS2lsbEFsbFByb2Nlc3Nlcy54YW1sAzoDPQ4CAQE7BTuLAQIBAjtyO4gBAgED</sads:DebugSymbol.Symbol>
+    <ui:KillProcess ContinueOnError="{x:Null}" Process="{x:Null}" DisplayName="Kill process" sap2010:WorkflowViewState.IdRef="KillProcess_1" ProcessName="chrome.exe" />
+    <sads:DebugSymbol.Symbol>d0xDOlxVc2Vyc1xJQkFkbWluXERvY3VtZW50c1xVaVBhdGhcQ2xpZW50SGFzaFxGcmFtZXdvcmtcS2lsbEFsbFByb2Nlc3Nlcy54YW1sBToDPg4CAQE7BTuLAQIBBDwFPKkBAgECO3I7iAECAQU8mgE8pgECAQM=</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
-      <sap2010:ViewStateData Id="LogMessage_1" sap:VirtualizedContainerService.HintSize="313.6,92.8" />
-      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="336,293.6">
+      <sap2010:ViewStateData Id="LogMessage_1" sap:VirtualizedContainerService.HintSize="314,91" />
+      <sap2010:ViewStateData Id="KillProcess_1" sap:VirtualizedContainerService.HintSize="314,22" />
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="336,349">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -70,7 +72,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="CloseAllApplications_1" sap:VirtualizedContainerService.HintSize="376,373.6" />
+      <sap2010:ViewStateData Id="CloseAllApplications_1" sap:VirtualizedContainerService.HintSize="376,429" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

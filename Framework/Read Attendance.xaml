@@ -1,0 +1,402 @@
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="Read_Attendance"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
+ xmlns:sd="clr-namespace:System.Data;assembly=System.Data"
+ xmlns:ui="http://schemas.uipath.com/workflow/activities"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+    <x:Property Name="in_FileName" Type="InArgument(x:String)" />
+    <x:Property Name="out_dt_Attendance" Type="OutArgument(sd:DataTable)" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap2010:WorkflowViewState.IdRef>Read_Attendance_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>Microsoft.VisualBasic.CompilerServices</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>UiPath.Core</AssemblyReference>
+      <AssemblyReference>UiPath.Core.Activities</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualStudio.Services.Common</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="Read Attendance" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:Int32" Name="total" />
+      <Variable x:TypeArguments="x:Double" Name="overall" />
+    </Sequence.Variables>
+    <ui:ExcelApplicationScope Password="{x:Null}" CreateNewFile="False" DisplayName="Excel application scope" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_1" Visible="False" WorkbookPath="[in_FileName]">
+      <ui:ExcelApplicationScope.Body>
+        <ActivityAction x:TypeArguments="ui:WorkbookApplication">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
+          </ActivityAction.Argument>
+          <Sequence DisplayName="Do" sap2010:WorkflowViewState.IdRef="Sequence_2">
+            <Sequence.Variables>
+              <Variable x:TypeArguments="x:String" Name="start_Cell" />
+              <Variable x:TypeArguments="ui:GenericValue" Name="header_row" />
+              <Variable x:TypeArguments="sd:DataTable" Name="dt_Attendance" />
+              <Variable x:TypeArguments="x:String" Name="op" />
+              <Variable x:TypeArguments="ui:GenericValue" Name="no_sessions" />
+              <Variable x:TypeArguments="ui:GenericValue" Name="sub_name" />
+              <Variable x:TypeArguments="x:Int32" Name="field_count" />
+              <Variable x:TypeArguments="ui:GenericValue" Name="colcounter" />
+            </Sequence.Variables>
+            <ui:ExcelReadCell Cell="[in_Config(&quot;Number Sessions Cell&quot;).ToString]" DisplayName="Read Cell" sap2010:WorkflowViewState.IdRef="ExcelReadCell_5" SheetName="Sheet1">
+              <ui:ExcelReadCell.Result>
+                <OutArgument x:TypeArguments="ui:GenericValue">[no_sessions]</OutArgument>
+              </ui:ExcelReadCell.Result>
+            </ui:ExcelReadCell>
+            <ui:ExcelReadCell Cell="[in_Config(&quot;Subject Name Cell&quot;).ToString]" DisplayName="Read Cell" sap2010:WorkflowViewState.IdRef="ExcelReadCell_6" SheetName="Sheet1">
+              <ui:ExcelReadCell.Result>
+                <OutArgument x:TypeArguments="ui:GenericValue">[sub_name]</OutArgument>
+              </ui:ExcelReadCell.Result>
+            </ui:ExcelReadCell>
+            <Assign sap2010:WorkflowViewState.IdRef="Assign_4">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:Int32">[field_count]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:Int32">[Convert.ToInt32(in_Config("Attendance Column Field Count").ToString)]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <Assign sap2010:WorkflowViewState.IdRef="Assign_1">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[start_Cell]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[in_Config("Attendance Column Fields").ToString.Split(":"c)(0).Trim+in_Config("Headers Row").ToString]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <ui:ExcelReadRange AddHeaders="True" DataTable="[dt_Attendance]" DisplayName="Read Range" sap2010:WorkflowViewState.IdRef="ExcelReadRange_1" Range="[start_Cell+header_row]" SheetName="Sheet1" />
+            <ui:AddDataColumn x:TypeArguments="x:Object" Column="{x:Null}" DefaultValue="{x:Null}" AllowDBNull="True" AutoIncrement="False" ColumnName="Overall" DataTable="[dt_Attendance]" DisplayName="Add data column" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_1" MaxLength="100" Unique="False" />
+            <ui:ForEachRow DataTable="[dt_Attendance]" DisplayName="For each row" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
+              <ui:ForEachRow.Body>
+                <ActivityAction x:TypeArguments="sd:DataRow">
+                  <ActivityAction.Argument>
+                    <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row" />
+                  </ActivityAction.Argument>
+                  <Sequence DisplayName="Body" sap2010:WorkflowViewState.IdRef="Sequence_3">
+                    <Sequence.Variables>
+                      <Variable x:TypeArguments="ui:GenericValue" Name="val" />
+                    </Sequence.Variables>
+                    <Sequence DisplayName="Reset initial params" sap2010:WorkflowViewState.IdRef="Sequence_4">
+                      <Assign sap2010:WorkflowViewState.IdRef="Assign_5">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="ui:GenericValue">[colcounter]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="ui:GenericValue">[0]</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                      <Assign sap2010:WorkflowViewState.IdRef="Assign_8">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="x:Double">[overall]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="x:Double">0</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                      <Assign sap2010:WorkflowViewState.IdRef="Assign_9">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="x:Int32">[total]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="x:Int32">0</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                    </Sequence>
+                    <DoWhile DisplayName="Do while" sap2010:WorkflowViewState.IdRef="DoWhile_1" Condition="[colcounter&lt;Int32.Parse(no_sessions)]">
+                      <Sequence sap2010:WorkflowViewState.IdRef="Sequence_5">
+                        <ui:GetRowItem Column="{x:Null}" ColumnName="{x:Null}" ColumnIndex="[field_count+colcounter]" DisplayName="Get Attendance Value" sap2010:WorkflowViewState.IdRef="GetRowItem_1" Row="[dt_Attendance.Rows(dt_Attendance.Rows.IndexOf(row))]">
+                          <ui:GetRowItem.Value>
+                            <OutArgument x:TypeArguments="ui:GenericValue">[val]</OutArgument>
+                          </ui:GetRowItem.Value>
+                        </ui:GetRowItem>
+                        <Flowchart DisplayName="Update Total" sap2010:WorkflowViewState.IdRef="Flowchart_1" StartNode="{x:Reference __ReferenceID6}">
+                          <FlowDecision x:Name="__ReferenceID6" Condition="[in_Config(&quot;Attendance Format&quot;).ToString=&quot;Y/N&quot;]" sap2010:WorkflowViewState.IdRef="FlowDecision_1">
+                            <FlowDecision.True>
+                              <FlowDecision x:Name="__ReferenceID1" Condition="[val=&quot;Y&quot;]" sap2010:WorkflowViewState.IdRef="FlowDecision_2">
+                                <FlowDecision.True>
+                                  <FlowStep x:Name="__ReferenceID0" sap2010:WorkflowViewState.IdRef="FlowStep_1">
+                                    <Sequence DisplayName="Update Total Increment" sap2010:WorkflowViewState.IdRef="Sequence_6">
+                                      <Assign sap2010:WorkflowViewState.IdRef="Assign_10">
+                                        <Assign.To>
+                                          <OutArgument x:TypeArguments="x:Int32">[total]</OutArgument>
+                                        </Assign.To>
+                                        <Assign.Value>
+                                          <InArgument x:TypeArguments="x:Int32">[total+1]</InArgument>
+                                        </Assign.Value>
+                                      </Assign>
+                                    </Sequence>
+                                  </FlowStep>
+                                </FlowDecision.True>
+                              </FlowDecision>
+                            </FlowDecision.True>
+                            <FlowDecision.False>
+                              <FlowDecision x:Name="__ReferenceID2" Condition="[in_Config(&quot;Attendance Format&quot;).ToString=&quot;P/A&quot;]" sap2010:WorkflowViewState.IdRef="FlowDecision_3">
+                                <FlowDecision.True>
+                                  <FlowDecision x:Name="__ReferenceID3" Condition="[val=&quot;P&quot;]" sap2010:WorkflowViewState.IdRef="FlowDecision_4" True="{x:Reference __ReferenceID0}" />
+                                </FlowDecision.True>
+                                <FlowDecision.False>
+                                  <FlowDecision x:Name="__ReferenceID4" Condition="[in_Config(&quot;Attendance Format&quot;).ToString=&quot;1/0&quot;]" sap2010:WorkflowViewState.IdRef="FlowDecision_5">
+                                    <FlowDecision.True>
+                                      <FlowDecision x:Name="__ReferenceID5" Condition="[val=&quot;1&quot;]" sap2010:WorkflowViewState.IdRef="FlowDecision_6" True="{x:Reference __ReferenceID0}" />
+                                    </FlowDecision.True>
+                                  </FlowDecision>
+                                </FlowDecision.False>
+                              </FlowDecision>
+                            </FlowDecision.False>
+                          </FlowDecision>
+                          <x:Reference>__ReferenceID0</x:Reference>
+                          <x:Reference>__ReferenceID1</x:Reference>
+                          <x:Reference>__ReferenceID2</x:Reference>
+                          <x:Reference>__ReferenceID3</x:Reference>
+                          <x:Reference>__ReferenceID4</x:Reference>
+                          <x:Reference>__ReferenceID5</x:Reference>
+                        </Flowchart>
+                        <Assign sap2010:WorkflowViewState.IdRef="Assign_12">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="ui:GenericValue">[colcounter]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="ui:GenericValue">[colcounter+1]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                      </Sequence>
+                    </DoWhile>
+                    <Assign sap2010:WorkflowViewState.IdRef="Assign_11">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Double">[overall]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Double">[(total/Int32.Parse(no_sessions))*100]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" Buttons="Ok" DisplayName="Message box" sap2010:WorkflowViewState.IdRef="MessageBox_3" Text="[&quot;Overall: &quot;+overall.ToString+&quot;Total: &quot;+total.ToString+&quot;Sessions: &quot;+no_sessions]" TopMost="True" />
+                    <Assign sap2010:WorkflowViewState.IdRef="Assign_14">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Object">[dt_Attendance.Rows(dt_Attendance.Rows.IndexOf(row)).Item("Overall")]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Object">[overall]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                  </Sequence>
+                </ActivityAction>
+              </ui:ForEachRow.Body>
+            </ui:ForEachRow>
+            <Assign>
+              <Assign.To>
+                <OutArgument x:TypeArguments="sd:DataTable">[out_dt_Attendance]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="sd:DataTable">[dt_Attendance]</InArgument>
+              </Assign.Value>
+              <sap2010:WorkflowViewState.IdRef>Assign_15</sap2010:WorkflowViewState.IdRef>
+            </Assign>
+          </Sequence>
+        </ActivityAction>
+      </ui:ExcelApplicationScope.Body>
+    </ui:ExcelApplicationScope>
+    <sads:DebugSymbol.Symbol>d19DOlxVc2Vyc1xTYW15YWtcRG9jdW1lbnRzXFVpUGF0aFxVaVBhdGgtQXR0ZW5kYW5jZS1GcmFtZXdvcmstVUFGXEZyYW1ld29ya1xSZWFkIEF0dGVuZGFuY2UueGFtbEZKA/4BDgIBAU8F/AEgAgECT8YBT9UBAgFgVQv5ARYCAQNgDWQgAgFaZQ1pIAIBVGoNcRYCAVByDXkWAgFKeg16zwECAUV7DXuxAgIBQXwN7wEdAgEJ8AEN+AEWAgEEYCRgXAIBXmJAYk0CAVxgsQFguQECAVtlJGVZAgFYZ0BnSgIBVmWuAWW2AQIBVW83b30CAVNsOGxFAgFRdzh3ngECAU10OXRFAgFLejx6TQIBSHqgAXq5AQIBR3rEAXrMAQIBRnuYAXuhAQIBRHusAXu9AQIBQnwmfDcCAT+CARPsAR4CAQr1ATz1AUsCAQfyAT3yAVACAQWGARWfASACATKgARXaAR8CARXbARXiAR4CARHjARXjAawCAgEP5AEV6wEeAgELhwEXjgEgAgE7jwEXlgEgAgE3lwEXngEgAgEzoAFroAGVAQIBMaEBF9kBIgIBFuABQOABZgIBFN0BQd0BSgIBEuMBqgHjAZoCAgEQ6QFA6QFJAgEN5gFB5gGGAQIBDIwBSYwBTAIBPokBSokBVgIBPJQBQpQBQwIBOpEBQ5EBTAIBOJwBQZwBQgIBNpkBQpkBSQIBNKIBGaYBKQIBLKcBGdABJQIBHNEBGdgBIgIBF6QBTKQBUQIBL6IBzQGiAYQCAgEuogFcogF2AgEtqAFLqAGQAQIBKrwBT7wBlAECASjBAVPBAZgBAgEmwwFXwwFsAgElrQEltgEwAgEfvgFTvgFoAgEeqgFPqgFkAgEd1gFL1gFZAgEa0wFM0wFYAgEYrgEntQEwAgEgswFRswFaAgEjsAFSsAFZAgEh</sads:DebugSymbol.Symbol>
+  </Sequence>
+  <sap2010:WorkflowViewState.ViewStateManager>
+    <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="ExcelReadCell_5" sap:VirtualizedContainerService.HintSize="516.8,59.2" />
+      <sap2010:ViewStateData Id="ExcelReadCell_6" sap:VirtualizedContainerService.HintSize="516.8,59.2" />
+      <sap2010:ViewStateData Id="Assign_4" sap:VirtualizedContainerService.HintSize="516.8,60.8" />
+      <sap2010:ViewStateData Id="Assign_1" sap:VirtualizedContainerService.HintSize="516.8,60.8" />
+      <sap2010:ViewStateData Id="ExcelReadRange_1" sap:VirtualizedContainerService.HintSize="516.8,59.2" />
+      <sap2010:ViewStateData Id="AddDataColumn`1_1" sap:VirtualizedContainerService.HintSize="516.8,22.4" />
+      <sap2010:ViewStateData Id="Assign_5" sap:VirtualizedContainerService.HintSize="243.2,60.8" />
+      <sap2010:ViewStateData Id="Assign_8" sap:VirtualizedContainerService.HintSize="243.2,60.8" />
+      <sap2010:ViewStateData Id="Assign_9" sap:VirtualizedContainerService.HintSize="243.2,60.8" />
+      <sap2010:ViewStateData Id="Sequence_4" sap:VirtualizedContainerService.HintSize="464,387.2">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="GetRowItem_1" sap:VirtualizedContainerService.HintSize="320,64" />
+      <sap2010:ViewStateData Id="Assign_10" sap:VirtualizedContainerService.HintSize="243.2,60.8" />
+      <sap2010:ViewStateData Id="Sequence_6" sap:VirtualizedContainerService.HintSize="265.6,185.6">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_1">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">370,533.6</av:Point>
+            <av:Size x:Key="ShapeSize">200,52.8</av:Size>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowDecision_2" sap:VirtualizedContainerService.HintSize="70.4,87.2">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <av:Point x:Key="ShapeLocation">94.8,206.4</av:Point>
+            <av:Size x:Key="ShapeSize">70.4,87.2</av:Size>
+            <av:PointCollection x:Key="TrueConnector">94.8,250 64.8,250 64.8,560 370,560</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowDecision_4" sap:VirtualizedContainerService.HintSize="70.4,87.2">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <av:Point x:Key="ShapeLocation">344.8,286.4</av:Point>
+            <av:Size x:Key="ShapeSize">70.4,87.2</av:Size>
+            <av:PointCollection x:Key="TrueConnector">344.8,330 320,330 320,503.6 470,503.6 470,533.6</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowDecision_6" sap:VirtualizedContainerService.HintSize="70.4,87.2">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <av:Point x:Key="ShapeLocation">554.8,386.4</av:Point>
+            <av:Size x:Key="ShapeSize">70.4,87.2</av:Size>
+            <av:PointCollection x:Key="TrueConnector">554.8,430 524.8,430 524.8,503.6 584.8,503.6 584.8,560 570,560</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowDecision_5" sap:VirtualizedContainerService.HintSize="70.4,87.2">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <av:Point x:Key="ShapeLocation">694.8,296.4</av:Point>
+            <av:Size x:Key="ShapeSize">70.4,87.2</av:Size>
+            <av:PointCollection x:Key="TrueConnector">694.8,340 590,340 590,386.4</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowDecision_3" sap:VirtualizedContainerService.HintSize="70.4,87.2">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <av:Point x:Key="ShapeLocation">494.8,206.4</av:Point>
+            <av:Size x:Key="ShapeSize">70.4,87.2</av:Size>
+            <av:PointCollection x:Key="TrueConnector">494.8,250 380,250 380,286.4</av:PointCollection>
+            <av:PointCollection x:Key="FalseConnector">565.2,250 730,250 730,296.4</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowDecision_1" sap:VirtualizedContainerService.HintSize="70.4,87.2">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <av:Point x:Key="ShapeLocation">264.8,136.4</av:Point>
+            <av:Size x:Key="ShapeSize">70.4,87.2</av:Size>
+            <av:PointCollection x:Key="TrueConnector">264.8,180 130,180 130,206.4</av:PointCollection>
+            <av:PointCollection x:Key="FalseConnector">335.2,180 530,180 530,206.4</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Flowchart_1" sap:VirtualizedContainerService.HintSize="320,52.8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <av:Point x:Key="ShapeLocation">410,2.4</av:Point>
+            <av:Size x:Key="ShapeSize">60,75.2</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">440,77.6 440,107.6 300,107.6 300,136.4</av:PointCollection>
+            <x:Double x:Key="Width">1015.1999999999999</x:Double>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Assign_12" sap:VirtualizedContainerService.HintSize="320,60.8" />
+      <sap2010:ViewStateData Id="Sequence_5" sap:VirtualizedContainerService.HintSize="342.4,382.4">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="DoWhile_1" sap:VirtualizedContainerService.HintSize="464,544" />
+      <sap2010:ViewStateData Id="Assign_11" sap:VirtualizedContainerService.HintSize="464,60.8" />
+      <sap2010:ViewStateData Id="MessageBox_3" sap:VirtualizedContainerService.HintSize="464,59.2" />
+      <sap2010:ViewStateData Id="Assign_14" sap:VirtualizedContainerService.HintSize="464,60.8" />
+      <sap2010:ViewStateData Id="Sequence_3" sap:VirtualizedContainerService.HintSize="486.4,1396.8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ForEachRow_1" sap:VirtualizedContainerService.HintSize="516.8,1545.6" />
+      <sap2010:ViewStateData Id="Assign_15" sap:VirtualizedContainerService.HintSize="516.8,60.8" />
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="539.2,2332.8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ExcelApplicationScope_1" sap:VirtualizedContainerService.HintSize="553.6,2481.6" />
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="576,2364.8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Read_Attendance_1" sap:VirtualizedContainerService.HintSize="616,2484.8" />
+    </sap2010:ViewStateManager>
+  </sap2010:WorkflowViewState.ViewStateManager>
+</Activity>

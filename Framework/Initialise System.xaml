@@ -1,0 +1,231 @@
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="Initialise_System" mva:VisualBasic.Settings="{x:Null}" sap2010:WorkflowViewState.IdRef="Initialise_System_1"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:s="clr-namespace:System;assembly=mscorlib"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
+ xmlns:sd="clr-namespace:System.Data;assembly=System.Data"
+ xmlns:ui="http://schemas.uipath.com/workflow/activities"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>UiPath.Core</AssemblyReference>
+      <AssemblyReference>UiPath.Core.Activities</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <TryCatch DisplayName="Try catch" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+    <TryCatch.Try>
+      <Sequence DisplayName="Initialise System" sap2010:WorkflowViewState.IdRef="Sequence_1">
+        <Sequence.Variables>
+          <Variable x:TypeArguments="x:String" Name="variable1" />
+          <Variable x:TypeArguments="ui:GenericValue" Name="no_batch" />
+          <Variable x:TypeArguments="ui:GenericValue" Name="at_threshold" />
+          <Variable x:TypeArguments="ui:GenericValue" Name="at_format" />
+          <Variable x:TypeArguments="ui:GenericValue" Name="input_dir" />
+          <Variable x:TypeArguments="sd:DataTable" Name="dt_Config" />
+          <Variable x:TypeArguments="ui:GenericValue" Name="output_dir" />
+          <Variable x:TypeArguments="ui:GenericValue" Name="org_name" />
+        </Sequence.Variables>
+        <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" Buttons="Ok" DisplayName="Message box" sap2010:WorkflowViewState.IdRef="MessageBox_1" Text="Welcome to UAF Attendance Framework! Press OK to continue..." TopMost="True" />
+        <ui:InputDialog Options="{x:Null}" DisplayName="Input dialog" sap2010:WorkflowViewState.IdRef="InputDialog_6" IsPassword="False" Label="Please enter your Organization Name" Title="Organization Name">
+          <ui:InputDialog.Result>
+            <OutArgument x:TypeArguments="ui:GenericValue">[org_name]</OutArgument>
+          </ui:InputDialog.Result>
+        </ui:InputDialog>
+        <ui:InputDialog Options="{x:Null}" DisplayName="Input dialog" sap2010:WorkflowViewState.IdRef="InputDialog_1" IsPassword="False" Label="Please enter the number of batches to record attendance:" Title="Number of batches">
+          <ui:InputDialog.Result>
+            <OutArgument x:TypeArguments="ui:GenericValue">[no_batch]</OutArgument>
+          </ui:InputDialog.Result>
+        </ui:InputDialog>
+        <ui:InputDialog Options="{x:Null}" DisplayName="Input dialog" sap2010:WorkflowViewState.IdRef="InputDialog_2" IsPassword="False" Label="Please enter the attendance threshold % in integer:" Title="Attendance Threshold">
+          <ui:InputDialog.Result>
+            <OutArgument x:TypeArguments="ui:GenericValue">[at_threshold]</OutArgument>
+          </ui:InputDialog.Result>
+        </ui:InputDialog>
+        <ui:InputDialog DisplayName="Input dialog" sap2010:WorkflowViewState.IdRef="InputDialog_3" IsPassword="False" Label="Please select the attendance format of Excel file:" Options="[{&quot;Y/N&quot;,&quot;P/A&quot;,&quot;1/0&quot;}]" Title="Attendance Format">
+          <ui:InputDialog.Result>
+            <OutArgument x:TypeArguments="ui:GenericValue">[at_format]</OutArgument>
+          </ui:InputDialog.Result>
+        </ui:InputDialog>
+        <ui:InputDialog Options="{x:Null}" DisplayName="Input dialog" sap2010:WorkflowViewState.IdRef="InputDialog_4" IsPassword="False" Label="Please specify the input directory location:" Title="Input directory">
+          <ui:InputDialog.Result>
+            <OutArgument x:TypeArguments="ui:GenericValue">[input_dir]</OutArgument>
+          </ui:InputDialog.Result>
+        </ui:InputDialog>
+        <ui:InputDialog Options="{x:Null}" DisplayName="Input dialog" sap2010:WorkflowViewState.IdRef="InputDialog_5" IsPassword="False" Label="Please specify the output directory location:" Title="Output Directory">
+          <ui:InputDialog.Result>
+            <OutArgument x:TypeArguments="ui:GenericValue">[output_dir]</OutArgument>
+          </ui:InputDialog.Result>
+        </ui:InputDialog>
+        <While sap2010:WorkflowViewState.IdRef="While_1">
+          <While.Variables>
+            <Variable x:TypeArguments="x:Int32" Default="1" Name="counter" />
+          </While.Variables>
+          <While.Condition>[counter&lt;=no_batch]</While.Condition>
+          <Sequence sap2010:WorkflowViewState.IdRef="Sequence_4">
+            <ui:CreateDirectory ContinueOnError="{x:Null}" DisplayName="Create directory" sap2010:WorkflowViewState.IdRef="CreateDirectory_1" Path="[input_dir+&quot;\Batch&quot;+counter.ToString]" />
+            <Assign sap2010:WorkflowViewState.IdRef="Assign_1">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:Int32">[counter]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:Int32">[counter+1]</InArgument>
+              </Assign.Value>
+            </Assign>
+          </Sequence>
+        </While>
+        <ui:BuildDataTable DataTable="[dt_Config]" DisplayName="Build data table" sap2010:WorkflowViewState.IdRef="BuildDataTable_1" TableInfo="&lt;NewDataSet&gt;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xA;      &lt;xs:complexType&gt;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xA;            &lt;xs:complexType&gt;&#xA;              &lt;xs:sequence&gt;&#xA;                &lt;xs:element name=&quot;Name&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Value&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Description&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;              &lt;/xs:sequence&gt;&#xA;            &lt;/xs:complexType&gt;&#xA;          &lt;/xs:element&gt;&#xA;        &lt;/xs:choice&gt;&#xA;      &lt;/xs:complexType&gt;&#xA;    &lt;/xs:element&gt;&#xA;  &lt;/xs:schema&gt;&#xA;&lt;/NewDataSet&gt;" />
+        <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{&quot;Attendance Format&quot;,at_format,&quot;&quot;}]" DataTable="[dt_Config]" DisplayName="Add data row" sap2010:WorkflowViewState.IdRef="AddDataRow_1" />
+        <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{&quot;Attendance Threshold&quot;,at_threshold,&quot;&quot;}]" DataTable="[dt_Config]" DisplayName="Add data row" sap2010:WorkflowViewState.IdRef="AddDataRow_2" />
+        <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{&quot;Input Directory&quot;,input_dir,&quot;&quot;}]" DataTable="[dt_Config]" DisplayName="Add data row" sap2010:WorkflowViewState.IdRef="AddDataRow_3" />
+        <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{&quot;Output Directory&quot;,output_dir,&quot;&quot;}]" DataTable="[dt_Config]" DisplayName="Add data row" sap2010:WorkflowViewState.IdRef="AddDataRow_4" />
+        <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{&quot;Number_Batches&quot;,no_batch,&quot;&quot;}]" DataTable="[dt_Config]" DisplayName="Add data row" sap2010:WorkflowViewState.IdRef="AddDataRow_5" />
+        <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{&quot;Organization&quot;,org_name,&quot;&quot;}]" DataTable="[dt_Config]" DisplayName="Add data row" sap2010:WorkflowViewState.IdRef="AddDataRow_6" />
+        <ui:ExcelApplicationScope Password="{x:Null}" CreateNewFile="False" DisplayName="Excel application scope" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_1" Visible="False" WorkbookPath="[Environment.CurrentDirectory.ToString+&quot;\Data\Config.xlsx&quot;]">
+          <ui:ExcelApplicationScope.Body>
+            <ActivityAction x:TypeArguments="ui:WorkbookApplication">
+              <ActivityAction.Argument>
+                <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
+              </ActivityAction.Argument>
+              <Sequence DisplayName="Do" sap2010:WorkflowViewState.IdRef="Sequence_2">
+                <Sequence.Variables>
+                  <Variable x:TypeArguments="x:String" Name="op" />
+                  <Variable x:TypeArguments="sd:DataTable" Name="opdt" />
+                </Sequence.Variables>
+                <ui:ExcelWriteRange AddHeaders="True" DataTable="[dt_Config]" DisplayName="Write Range" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_2" SheetName="Settings" StartingCell="A1" />
+              </Sequence>
+            </ActivityAction>
+          </ui:ExcelApplicationScope.Body>
+        </ui:ExcelApplicationScope>
+        <ui:WriteTextFile DisplayName="Write text file" FileName="[Environment.CurrentDirectory.ToString+&quot;\settings.json&quot;]" sap2010:WorkflowViewState.IdRef="WriteTextFile_1" Text="[&quot;{&quot;&quot;init&quot;&quot;:&quot;&quot;true&quot;&quot;}&quot;]" />
+        <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" Buttons="Ok" DisplayName="Message box" sap2010:WorkflowViewState.IdRef="MessageBox_6" Text="Initialization Complete! Framework is now ready for use.." TopMost="True" />
+      </Sequence>
+    </TryCatch.Try>
+    <TryCatch.Catches>
+      <Catch x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+        <ActivityAction x:TypeArguments="s:Exception">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+          </ActivityAction.Argument>
+          <Sequence sap2010:WorkflowViewState.IdRef="Sequence_3">
+            <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Error" Message="Unable to initialise system!" />
+            <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" Buttons="Ok" DisplayName="Message box" sap2010:WorkflowViewState.IdRef="MessageBox_3" Text="Unable to initialise system! Please try again.." TopMost="True" />
+          </Sequence>
+        </ActivityAction>
+      </Catch>
+    </TryCatch.Catches>
+    <sads:DebugSymbol.Symbol>d2FDOlxVc2Vyc1xTYW15YWtcRG9jdW1lbnRzXFVpUGF0aFxVaVBhdGgtQXR0ZW5kYW5jZS1GcmFtZXdvcmstVUFGXEZyYW1ld29ya1xJbml0aWFsaXNlIFN5c3RlbS54YW1sSz8DpQEOAgEBQQeVARICAQedAQugARYCAQJMCUzuAQIBWk0JURoCAVVSCVYaAgFQVwlbGgIBS1wJYBoCAUVhCWUaAgFAZglqGgIBO2sJexECATB8CXzqCgIBLX0JfdMBAgEpfgl+2QECASV/CX/RAQIBIYABCYAB0wECAR2BAQmBAc8BAgEZggEJggHNAQIBFYMBCZIBJAIBDZMBCZMBjAICAQqUAQmUAesBAgEIngENngGcAQIBBZ8BDZ8B5QECAQNMngFM3AECAVtNkAFNtQECAVlPPE9GAgFXTbwBTc8BAgFWUpABUsoBAgFUVDxURgIBUlLRAVLkAQIBUVeQAVfFAQIBT1k8WUoCAU1XzAFX4gECAUxcfVyxAQIBSly6AVzvAQIBSV48XkcCAUdc9gFciQICAUZhkAFhvgECAURjPGNHAgFCYcUBYdYBAgFBZpABZr8BAgE/aDxoSAIBPWbGAWbYAQIBPG05bTwCATFwC3oWAgEzbxxvMgIBMnwmfDMCAS59eX2GAQIBK300fW4CASp+f36MAQIBJ340fnQCASZ/d3+EAQIBI380f2wCASKAAXmAAYYBAgEfgAE0gAFuAgEegQF1gQGCAQIBG4EBNIEBagIBGoIBc4IBgAECAReCATSCAWgCARaDAcoBgwGRAgIBFIkBD48BGgIBDpMBvgGTAYkCAgEMkwFCkwGGAQIBC5QBngGUAdkBAgEJngF7ngGZAQIBBp8BogGfAdMBAgEEcQ1xyAECATlyDXkWAgE0jgERjgHGAQIBD3GUAXHFAQIBOnc3d0ICATd0OHRBAgE1jgG/AY4BwwECAROOAUGOAU4CARGOAacBjgGxAQIBEA==</sads:DebugSymbol.Symbol>
+  </TryCatch>
+  <sap2010:WorkflowViewState.ViewStateManager>
+    <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="MessageBox_1" sap:VirtualizedContainerService.HintSize="464,59.2" />
+      <sap2010:ViewStateData Id="InputDialog_6" sap:VirtualizedContainerService.HintSize="464,92.8" />
+      <sap2010:ViewStateData Id="InputDialog_1" sap:VirtualizedContainerService.HintSize="464,92.8" />
+      <sap2010:ViewStateData Id="InputDialog_2" sap:VirtualizedContainerService.HintSize="464,92.8" />
+      <sap2010:ViewStateData Id="InputDialog_3" sap:VirtualizedContainerService.HintSize="464,92.8" />
+      <sap2010:ViewStateData Id="InputDialog_4" sap:VirtualizedContainerService.HintSize="464,92.8" />
+      <sap2010:ViewStateData Id="InputDialog_5" sap:VirtualizedContainerService.HintSize="464,92.8" />
+      <sap2010:ViewStateData Id="CreateDirectory_1" sap:VirtualizedContainerService.HintSize="243.2,22.4" />
+      <sap2010:ViewStateData Id="Assign_1" sap:VirtualizedContainerService.HintSize="243.2,60.8" />
+      <sap2010:ViewStateData Id="Sequence_4" sap:VirtualizedContainerService.HintSize="265.6,248">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="While_1" sap:VirtualizedContainerService.HintSize="464,408" />
+      <sap2010:ViewStateData Id="BuildDataTable_1" sap:VirtualizedContainerService.HintSize="464,59.2" />
+      <sap2010:ViewStateData Id="AddDataRow_1" sap:VirtualizedContainerService.HintSize="464,22.4" />
+      <sap2010:ViewStateData Id="AddDataRow_2" sap:VirtualizedContainerService.HintSize="464,22.4" />
+      <sap2010:ViewStateData Id="AddDataRow_3" sap:VirtualizedContainerService.HintSize="464,22.4" />
+      <sap2010:ViewStateData Id="AddDataRow_4" sap:VirtualizedContainerService.HintSize="464,22.4" />
+      <sap2010:ViewStateData Id="AddDataRow_5" sap:VirtualizedContainerService.HintSize="464,22.4" />
+      <sap2010:ViewStateData Id="AddDataRow_6" sap:VirtualizedContainerService.HintSize="464,22.4" />
+      <sap2010:ViewStateData Id="ExcelWriteRange_2" sap:VirtualizedContainerService.HintSize="313.6,88" />
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="336,212.8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ExcelApplicationScope_1" sap:VirtualizedContainerService.HintSize="464,321.6" />
+      <sap2010:ViewStateData Id="WriteTextFile_1" sap:VirtualizedContainerService.HintSize="464,88" />
+      <sap2010:ViewStateData Id="MessageBox_6" sap:VirtualizedContainerService.HintSize="464,59.2" />
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="486.4,2491.2">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="LogMessage_1" sap:VirtualizedContainerService.HintSize="313.6,92.8" />
+      <sap2010:ViewStateData Id="MessageBox_3" sap:VirtualizedContainerService.HintSize="313.6,59.2" />
+      <sap2010:ViewStateData Id="Sequence_3" sap:VirtualizedContainerService.HintSize="336,316.8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Catch`1_1" sap:VirtualizedContainerService.HintSize="489.6,22.4">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="TryCatch_1" sap:VirtualizedContainerService.HintSize="504,2763.2" />
+      <sap2010:ViewStateData Id="Initialise_System_1" sap:VirtualizedContainerService.HintSize="544,2883.2" />
+    </sap2010:ViewStateManager>
+  </sap2010:WorkflowViewState.ViewStateManager>
+</Activity>

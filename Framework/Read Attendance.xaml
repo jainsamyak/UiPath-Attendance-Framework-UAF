@@ -15,6 +15,7 @@
     <x:Property Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
     <x:Property Name="in_FileName" Type="InArgument(x:String)" />
     <x:Property Name="out_dt_Attendance" Type="OutArgument(sd:DataTable)" />
+    <x:Property Name="out_ColumnName" Type="OutArgument(x:String)" />
   </x:Members>
   <mva:VisualBasic.Settings>
     <x:Null />
@@ -87,7 +88,6 @@
               <Variable x:TypeArguments="x:String" Name="start_Cell" />
               <Variable x:TypeArguments="ui:GenericValue" Name="header_row" />
               <Variable x:TypeArguments="sd:DataTable" Name="dt_Attendance" />
-              <Variable x:TypeArguments="x:String" Name="op" />
               <Variable x:TypeArguments="ui:GenericValue" Name="no_sessions" />
               <Variable x:TypeArguments="ui:GenericValue" Name="sub_name" />
               <Variable x:TypeArguments="x:Int32" Name="field_count" />
@@ -100,7 +100,7 @@
             </ui:ExcelReadCell>
             <ui:ExcelReadCell Cell="[in_Config(&quot;Subject Name Cell&quot;).ToString]" DisplayName="Read Cell" sap2010:WorkflowViewState.IdRef="ExcelReadCell_6" SheetName="Sheet1">
               <ui:ExcelReadCell.Result>
-                <OutArgument x:TypeArguments="ui:GenericValue">[sub_name]</OutArgument>
+                <OutArgument x:TypeArguments="x:String">[out_ColumnName]</OutArgument>
               </ui:ExcelReadCell.Result>
             </ui:ExcelReadCell>
             <Assign sap2010:WorkflowViewState.IdRef="Assign_4">
@@ -164,47 +164,50 @@
                             <OutArgument x:TypeArguments="ui:GenericValue">[val]</OutArgument>
                           </ui:GetRowItem.Value>
                         </ui:GetRowItem>
-                        <Flowchart DisplayName="Update Total" sap2010:WorkflowViewState.IdRef="Flowchart_1" StartNode="{x:Reference __ReferenceID6}">
-                          <FlowDecision x:Name="__ReferenceID6" Condition="[in_Config(&quot;Attendance Format&quot;).ToString=&quot;Y/N&quot;]" sap2010:WorkflowViewState.IdRef="FlowDecision_1">
-                            <FlowDecision.True>
-                              <FlowDecision x:Name="__ReferenceID1" Condition="[val=&quot;Y&quot;]" sap2010:WorkflowViewState.IdRef="FlowDecision_2">
-                                <FlowDecision.True>
-                                  <FlowStep x:Name="__ReferenceID0" sap2010:WorkflowViewState.IdRef="FlowStep_1">
-                                    <Sequence DisplayName="Update Total Increment" sap2010:WorkflowViewState.IdRef="Sequence_6">
-                                      <Assign sap2010:WorkflowViewState.IdRef="Assign_10">
-                                        <Assign.To>
-                                          <OutArgument x:TypeArguments="x:Int32">[total]</OutArgument>
-                                        </Assign.To>
-                                        <Assign.Value>
-                                          <InArgument x:TypeArguments="x:Int32">[total+1]</InArgument>
-                                        </Assign.Value>
-                                      </Assign>
-                                    </Sequence>
-                                  </FlowStep>
-                                </FlowDecision.True>
-                              </FlowDecision>
-                            </FlowDecision.True>
-                            <FlowDecision.False>
-                              <FlowDecision x:Name="__ReferenceID2" Condition="[in_Config(&quot;Attendance Format&quot;).ToString=&quot;P/A&quot;]" sap2010:WorkflowViewState.IdRef="FlowDecision_3">
-                                <FlowDecision.True>
-                                  <FlowDecision x:Name="__ReferenceID3" Condition="[val=&quot;P&quot;]" sap2010:WorkflowViewState.IdRef="FlowDecision_4" True="{x:Reference __ReferenceID0}" />
-                                </FlowDecision.True>
-                                <FlowDecision.False>
-                                  <FlowDecision x:Name="__ReferenceID4" Condition="[in_Config(&quot;Attendance Format&quot;).ToString=&quot;1/0&quot;]" sap2010:WorkflowViewState.IdRef="FlowDecision_5">
-                                    <FlowDecision.True>
-                                      <FlowDecision x:Name="__ReferenceID5" Condition="[val=&quot;1&quot;]" sap2010:WorkflowViewState.IdRef="FlowDecision_6" True="{x:Reference __ReferenceID0}" />
-                                    </FlowDecision.True>
-                                  </FlowDecision>
-                                </FlowDecision.False>
-                              </FlowDecision>
-                            </FlowDecision.False>
-                          </FlowDecision>
-                          <x:Reference>__ReferenceID0</x:Reference>
+                        <Flowchart DisplayName="Update Total" sap2010:WorkflowViewState.IdRef="Flowchart_1">
+                          <Flowchart.StartNode>
+                            <FlowDecision x:Name="__ReferenceID1" Condition="[in_Config(&quot;Attendance Format&quot;).ToString=&quot;Y/N&quot;]" sap2010:WorkflowViewState.IdRef="FlowDecision_1">
+                              <FlowDecision.True>
+                                <FlowDecision x:Name="__ReferenceID2" Condition="[val=&quot;Y&quot;]" sap2010:WorkflowViewState.IdRef="FlowDecision_2">
+                                  <FlowDecision.True>
+                                    <FlowStep x:Name="__ReferenceID0" sap2010:WorkflowViewState.IdRef="FlowStep_1">
+                                      <Sequence DisplayName="Update Total Increment" sap2010:WorkflowViewState.IdRef="Sequence_6">
+                                        <Assign sap2010:WorkflowViewState.IdRef="Assign_10">
+                                          <Assign.To>
+                                            <OutArgument x:TypeArguments="x:Int32">[total]</OutArgument>
+                                          </Assign.To>
+                                          <Assign.Value>
+                                            <InArgument x:TypeArguments="x:Int32">[total+1]</InArgument>
+                                          </Assign.Value>
+                                        </Assign>
+                                      </Sequence>
+                                    </FlowStep>
+                                  </FlowDecision.True>
+                                </FlowDecision>
+                              </FlowDecision.True>
+                              <FlowDecision.False>
+                                <FlowDecision x:Name="__ReferenceID3" Condition="[in_Config(&quot;Attendance Format&quot;).ToString=&quot;P/A&quot;]" sap2010:WorkflowViewState.IdRef="FlowDecision_3">
+                                  <FlowDecision.True>
+                                    <FlowDecision x:Name="__ReferenceID4" Condition="[val=&quot;P&quot;]" sap2010:WorkflowViewState.IdRef="FlowDecision_4" True="{x:Reference __ReferenceID0}" />
+                                  </FlowDecision.True>
+                                  <FlowDecision.False>
+                                    <FlowDecision x:Name="__ReferenceID5" Condition="[in_Config(&quot;Attendance Format&quot;).ToString=&quot;1/0&quot;]" sap2010:WorkflowViewState.IdRef="FlowDecision_5">
+                                      <FlowDecision.True>
+                                        <FlowDecision x:Name="__ReferenceID6" Condition="[val=&quot;1&quot;]" sap2010:WorkflowViewState.IdRef="FlowDecision_6" True="{x:Reference __ReferenceID0}" />
+                                      </FlowDecision.True>
+                                    </FlowDecision>
+                                  </FlowDecision.False>
+                                </FlowDecision>
+                              </FlowDecision.False>
+                            </FlowDecision>
+                          </Flowchart.StartNode>
                           <x:Reference>__ReferenceID1</x:Reference>
+                          <x:Reference>__ReferenceID0</x:Reference>
                           <x:Reference>__ReferenceID2</x:Reference>
                           <x:Reference>__ReferenceID3</x:Reference>
                           <x:Reference>__ReferenceID4</x:Reference>
                           <x:Reference>__ReferenceID5</x:Reference>
+                          <x:Reference>__ReferenceID6</x:Reference>
                         </Flowchart>
                         <Assign sap2010:WorkflowViewState.IdRef="Assign_12">
                           <Assign.To>
@@ -237,20 +240,19 @@
                 </ActivityAction>
               </ui:ForEachRow.Body>
             </ui:ForEachRow>
-            <Assign>
+            <Assign sap2010:WorkflowViewState.IdRef="Assign_15">
               <Assign.To>
                 <OutArgument x:TypeArguments="sd:DataTable">[out_dt_Attendance]</OutArgument>
               </Assign.To>
               <Assign.Value>
                 <InArgument x:TypeArguments="sd:DataTable">[dt_Attendance]</InArgument>
               </Assign.Value>
-              <sap2010:WorkflowViewState.IdRef>Assign_15</sap2010:WorkflowViewState.IdRef>
             </Assign>
           </Sequence>
         </ActivityAction>
       </ui:ExcelApplicationScope.Body>
     </ui:ExcelApplicationScope>
-    <sads:DebugSymbol.Symbol>d19DOlxVc2Vyc1xTYW15YWtcRG9jdW1lbnRzXFVpUGF0aFxVaVBhdGgtQXR0ZW5kYW5jZS1GcmFtZXdvcmstVUFGXEZyYW1ld29ya1xSZWFkIEF0dGVuZGFuY2UueGFtbEZKA/4BDgIBAU8F/AEgAgECT8YBT9UBAgFgVQv5ARYCAQNgDWQgAgFaZQ1pIAIBVGoNcRYCAVByDXkWAgFKeg16zwECAUV7DXuxAgIBQXwN7wEdAgEJ8AEN+AEWAgEEYCRgXAIBXmJAYk0CAVxgsQFguQECAVtlJGVZAgFYZ0BnSgIBVmWuAWW2AQIBVW83b30CAVNsOGxFAgFRdzh3ngECAU10OXRFAgFLejx6TQIBSHqgAXq5AQIBR3rEAXrMAQIBRnuYAXuhAQIBRHusAXu9AQIBQnwmfDcCAT+CARPsAR4CAQr1ATz1AUsCAQfyAT3yAVACAQWGARWfASACATKgARXaAR8CARXbARXiAR4CARHjARXjAawCAgEP5AEV6wEeAgELhwEXjgEgAgE7jwEXlgEgAgE3lwEXngEgAgEzoAFroAGVAQIBMaEBF9kBIgIBFuABQOABZgIBFN0BQd0BSgIBEuMBqgHjAZoCAgEQ6QFA6QFJAgEN5gFB5gGGAQIBDIwBSYwBTAIBPokBSokBVgIBPJQBQpQBQwIBOpEBQ5EBTAIBOJwBQZwBQgIBNpkBQpkBSQIBNKIBGaYBKQIBLKcBGdABJQIBHNEBGdgBIgIBF6QBTKQBUQIBL6IBzQGiAYQCAgEuogFcogF2AgEtqAFLqAGQAQIBKrwBT7wBlAECASjBAVPBAZgBAgEmwwFXwwFsAgElrQEltgEwAgEfvgFTvgFoAgEeqgFPqgFkAgEd1gFL1gFZAgEa0wFM0wFYAgEYrgEntQEwAgEgswFRswFaAgEjsAFSsAFZAgEh</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d19DOlxVc2Vyc1xTYW15YWtcRG9jdW1lbnRzXFVpUGF0aFxVaVBhdGgtQXR0ZW5kYW5jZS1GcmFtZXdvcmstVUFGXEZyYW1ld29ya1xSZWFkIEF0dGVuZGFuY2UueGFtbEZLA4ACDgIBAVAF/gEgAgECUMYBUNUBAgFgVgv7ARYCAQNgDWQgAgFaZQ1pIAIBVGoNcRYCAVByDXkWAgFKeg16zwECAUV7DXuxAgIBQXwN8gEdAgEJ8wEN+gEWAgEEYCRgXAIBXmJAYk0CAVxgsQFguQECAVtlJGVZAgFYZzlnSQIBVmWuAWW2AQIBVW83b30CAVNsOGxFAgFRdzh3ngECAU10OXRFAgFLejx6TQIBSHqgAXq5AQIBR3rEAXrMAQIBRnuYAXuhAQIBRHusAXu9AQIBQnwmfDcCAT+CARPvAR4CAQr4ATz4AUsCAQf1AT31AVACAQWGARWfASACATKgARXdAR8CARXeARXlAR4CARHmARXmAawCAgEP5wEV7gEeAgELhwEXjgEgAgE7jwEXlgEgAgE3lwEXngEgAgEzoAFroAGVAQIBMaEBF9wBIgIBFuMBQOMBZgIBFOABQeABSgIBEuYBqgHmAZoCAgEQ7AFA7AFJAgEN6QFB6QGGAQIBDIwBSYwBTAIBPokBSokBVgIBPJQBQpQBQwIBOpEBQ5EBTAIBOJwBQZwBQgIBNpkBQpkBSQIBNKIBGaYBKQIBLKcBGdMBJQIBHNQBGdsBIgIBF6QBTKQBUQIBL6IBzQGiAYQCAgEuogFcogF2AgEtqQFNqQGSAQIBKr0BUb0BlgECASjCAVXCAZoBAgEmxAFZxAFuAgElrgEntwEyAgEfvwFVvwFqAgEeqwFRqwFmAgEd2QFL2QFZAgEa1gFM1gFYAgEYrwEptgEyAgEgtAFTtAFcAgEjsQFUsQFbAgEh</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -388,15 +390,15 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="ExcelApplicationScope_1" sap:VirtualizedContainerService.HintSize="553.6,2481.6" />
-      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="576,2364.8">
+      <sap2010:ViewStateData Id="ExcelApplicationScope_1" sap:VirtualizedContainerService.HintSize="553.6,2441.6" />
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="576,2566.4">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Read_Attendance_1" sap:VirtualizedContainerService.HintSize="616,2484.8" />
+      <sap2010:ViewStateData Id="Read_Attendance_1" sap:VirtualizedContainerService.HintSize="616,3046.4" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

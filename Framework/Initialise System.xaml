@@ -64,7 +64,6 @@
     <TryCatch.Try>
       <Sequence DisplayName="Initialise System" sap2010:WorkflowViewState.IdRef="Sequence_1">
         <Sequence.Variables>
-          <Variable x:TypeArguments="x:String" Name="variable1" />
           <Variable x:TypeArguments="ui:GenericValue" Name="no_batch" />
           <Variable x:TypeArguments="ui:GenericValue" Name="at_threshold" />
           <Variable x:TypeArguments="ui:GenericValue" Name="at_format" />
@@ -104,23 +103,6 @@
             <OutArgument x:TypeArguments="ui:GenericValue">[output_dir]</OutArgument>
           </ui:InputDialog.Result>
         </ui:InputDialog>
-        <While sap2010:WorkflowViewState.IdRef="While_1">
-          <While.Variables>
-            <Variable x:TypeArguments="x:Int32" Default="1" Name="counter" />
-          </While.Variables>
-          <While.Condition>[counter&lt;=no_batch]</While.Condition>
-          <Sequence sap2010:WorkflowViewState.IdRef="Sequence_4">
-            <ui:CreateDirectory ContinueOnError="{x:Null}" DisplayName="Create directory" sap2010:WorkflowViewState.IdRef="CreateDirectory_1" Path="[input_dir+&quot;\Batch&quot;+counter.ToString]" />
-            <Assign sap2010:WorkflowViewState.IdRef="Assign_1">
-              <Assign.To>
-                <OutArgument x:TypeArguments="x:Int32">[counter]</OutArgument>
-              </Assign.To>
-              <Assign.Value>
-                <InArgument x:TypeArguments="x:Int32">[counter+1]</InArgument>
-              </Assign.Value>
-            </Assign>
-          </Sequence>
-        </While>
         <ui:BuildDataTable DataTable="[dt_Config]" DisplayName="Build data table" sap2010:WorkflowViewState.IdRef="BuildDataTable_1" TableInfo="&lt;NewDataSet&gt;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xA;      &lt;xs:complexType&gt;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xA;            &lt;xs:complexType&gt;&#xA;              &lt;xs:sequence&gt;&#xA;                &lt;xs:element name=&quot;Name&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Value&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Description&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;              &lt;/xs:sequence&gt;&#xA;            &lt;/xs:complexType&gt;&#xA;          &lt;/xs:element&gt;&#xA;        &lt;/xs:choice&gt;&#xA;      &lt;/xs:complexType&gt;&#xA;    &lt;/xs:element&gt;&#xA;  &lt;/xs:schema&gt;&#xA;&lt;/NewDataSet&gt;" />
         <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{&quot;Attendance Format&quot;,at_format,&quot;&quot;}]" DataTable="[dt_Config]" DisplayName="Add data row" sap2010:WorkflowViewState.IdRef="AddDataRow_1" />
         <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{&quot;Attendance Threshold&quot;,at_threshold,&quot;&quot;}]" DataTable="[dt_Config]" DisplayName="Add data row" sap2010:WorkflowViewState.IdRef="AddDataRow_2" />
@@ -144,8 +126,27 @@
             </ActivityAction>
           </ui:ExcelApplicationScope.Body>
         </ui:ExcelApplicationScope>
+        <ui:ExcelApplicationScope Password="{x:Null}" DisplayName="Excel application scope" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_2" Visible="False" WorkbookPath="[Environment.CurrentDirectory.ToString+&quot;\Data\Transactions.xlsx&quot;]">
+          <ui:ExcelApplicationScope.Body>
+            <ActivityAction x:TypeArguments="ui:WorkbookApplication">
+              <ActivityAction.Argument>
+                <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
+              </ActivityAction.Argument>
+              <Sequence DisplayName="Do" sap2010:WorkflowViewState.IdRef="Sequence_5">
+                <Sequence.Variables>
+                  <Variable x:TypeArguments="sd:DataTable" Name="dt_Transactionheaders" />
+                </Sequence.Variables>
+                <ui:ExcelWriteCell Cell="A1" DisplayName="Write Cell" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_1" SheetName="Sheet1" Text="Organization:" />
+                <ui:ExcelWriteCell Cell="B1" DisplayName="Write Cell" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_2" SheetName="Sheet1" Text="[org_name]" />
+                <ui:BuildDataTable DataTable="[dt_Transactionheaders]" DisplayName="Build data table" sap2010:WorkflowViewState.IdRef="BuildDataTable_2" TableInfo="&lt;NewDataSet&gt;&#xD;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xD;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xD;&#xA;      &lt;xs:complexType&gt;&#xD;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xD;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xD;&#xA;            &lt;xs:complexType&gt;&#xD;&#xA;              &lt;xs:sequence&gt;&#xD;&#xA;                &lt;xs:element name=&quot;Timestamp&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;Robot_x0020_Info&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;Message&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;              &lt;/xs:sequence&gt;&#xD;&#xA;            &lt;/xs:complexType&gt;&#xD;&#xA;          &lt;/xs:element&gt;&#xD;&#xA;        &lt;/xs:choice&gt;&#xD;&#xA;      &lt;/xs:complexType&gt;&#xD;&#xA;    &lt;/xs:element&gt;&#xD;&#xA;  &lt;/xs:schema&gt;&#xD;&#xA;&lt;/NewDataSet&gt;" />
+                <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{DateTime.Now,&quot;&quot;,&quot;System initialized and setup.&quot;}]" DataTable="[dt_Transactionheaders]" DisplayName="Add data row" sap2010:WorkflowViewState.IdRef="AddDataRow_7" />
+                <ui:ExcelWriteRange AddHeaders="True" DataTable="[dt_Transactionheaders]" DisplayName="Write Range" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_3" SheetName="Sheet1" StartingCell="A1" />
+              </Sequence>
+            </ActivityAction>
+          </ui:ExcelApplicationScope.Body>
+        </ui:ExcelApplicationScope>
         <ui:WriteTextFile DisplayName="Write text file" FileName="[Environment.CurrentDirectory.ToString+&quot;\settings.json&quot;]" sap2010:WorkflowViewState.IdRef="WriteTextFile_1" Text="[&quot;{&quot;&quot;init&quot;&quot;:&quot;&quot;true&quot;&quot;}&quot;]" />
-        <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" Buttons="Ok" DisplayName="Message box" sap2010:WorkflowViewState.IdRef="MessageBox_6" Text="Initialization Complete! Framework is now ready for use.." TopMost="True" />
+        <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" Buttons="Ok" DisplayName="Message box" sap2010:WorkflowViewState.IdRef="MessageBox_6" Text="Initialization Complete! Framework is now ready for use.. Please lauch the framework again to start processing." TopMost="True" />
       </Sequence>
     </TryCatch.Try>
     <TryCatch.Catches>
@@ -161,34 +162,24 @@
         </ActivityAction>
       </Catch>
     </TryCatch.Catches>
-    <sads:DebugSymbol.Symbol>d2FDOlxVc2Vyc1xTYW15YWtcRG9jdW1lbnRzXFVpUGF0aFxVaVBhdGgtQXR0ZW5kYW5jZS1GcmFtZXdvcmstVUFGXEZyYW1ld29ya1xJbml0aWFsaXNlIFN5c3RlbS54YW1sSz8DpQEOAgEBQQeVARICAQedAQugARYCAQJMCUzuAQIBWk0JURoCAVVSCVYaAgFQVwlbGgIBS1wJYBoCAUVhCWUaAgFAZglqGgIBO2sJexECATB8CXzqCgIBLX0JfdMBAgEpfgl+2QECASV/CX/RAQIBIYABCYAB0wECAR2BAQmBAc8BAgEZggEJggHNAQIBFYMBCZIBJAIBDZMBCZMBjAICAQqUAQmUAesBAgEIngENngGcAQIBBZ8BDZ8B5QECAQNMngFM3AECAVtNkAFNtQECAVlPPE9GAgFXTbwBTc8BAgFWUpABUsoBAgFUVDxURgIBUlLRAVLkAQIBUVeQAVfFAQIBT1k8WUoCAU1XzAFX4gECAUxcfVyxAQIBSly6AVzvAQIBSV48XkcCAUdc9gFciQICAUZhkAFhvgECAURjPGNHAgFCYcUBYdYBAgFBZpABZr8BAgE/aDxoSAIBPWbGAWbYAQIBPG05bTwCATFwC3oWAgEzbxxvMgIBMnwmfDMCAS59eX2GAQIBK300fW4CASp+f36MAQIBJ340fnQCASZ/d3+EAQIBI380f2wCASKAAXmAAYYBAgEfgAE0gAFuAgEegQF1gQGCAQIBG4EBNIEBagIBGoIBc4IBgAECAReCATSCAWgCARaDAcoBgwGRAgIBFIkBD48BGgIBDpMBvgGTAYkCAgEMkwFCkwGGAQIBC5QBngGUAdkBAgEJngF7ngGZAQIBBp8BogGfAdMBAgEEcQ1xyAECATlyDXkWAgE0jgERjgHGAQIBD3GUAXHFAQIBOnc3d0ICATd0OHRBAgE1jgG/AY4BwwECAROOAUGOAU4CARGOAacBjgGxAQIBEA==</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d2FDOlxVc2Vyc1xTYW15YWtcRG9jdW1lbnRzXFVpUGF0aFxVaVBhdGgtQXR0ZW5kYW5jZS1GcmFtZXdvcmstVUFGXEZyYW1ld29ya1xJbml0aWFsaXNlIFN5c3RlbS54YW1sVj8DpgEOAgEBQQeWARICAQeeAQuhARYCAQJLCUvuAQIBZkwJUBoCAWFRCVUaAgFcVglaGgIBV1sJXxoCAVFgCWQaAgFMZQlpGgIBR2oJauoKAgFEawlr0wECAUBsCWzZAQIBPG0JbdEBAgE4bglu0wECATRvCW/PAQIBMHAJcM0BAgEscQmAASQCASSBAQmTASQCAQ2UAQmUAYwCAgEKlQEJlQGhAgIBCJ8BDZ8BnAECAQWgAQ2gAeUBAgEDS54BS9wBAgFnTJABTLUBAgFlTjxORgIBY0y8AUzPAQIBYlGQAVHKAQIBYFM8U0YCAV5R0QFR5AECAV1WkAFWxQECAVtYPFhKAgFZVswBVuIBAgFYW31bsQECAVZbugFb7wECAVVdPF1HAgFTW/YBW4kCAgFSYJABYL4BAgFQYjxiRwIBTmDFAWDWAQIBTWWQAWW/AQIBS2c8Z0gCAUllxgFl2AECAUhqJmozAgFFa3lrhgECAUJrNGtuAgFBbH9sjAECAT5sNGx0AgE9bXdthAECATptNG1sAgE5bnluhgECATZuNG5uAgE1b3VvggECATJvNG9qAgExcHNwgAECAS5wNHBoAgEtccoBcZECAgErdw99GgIBJYEBtAGBAYECAgEjhwEPkAEaAgEOlAG+AZQBiQICAQyUAUKUAYYBAgELlQGeAZUBjwICAQmfAXufAZkBAgEGoAGiAaAB0wECAQR8EXzGAQIBJosBEYsBpAECAR+MARGMAaEBAgEbjQERjQHkCwIBGI4BEY4B9gECARSPARGPAdABAgEPfL8BfMMBAgEqfEF8TgIBKHynAXyxAQIBJ4sBKYsBLQIBIosBkgGLAaEBAgEhiwGEAYsBjAECASCMASmMAS0CAR6MAZIBjAGeAQIBHYwBhAGMAYwBAgEcjQEujQFHAgEZjgGQAY4BqQECARaOATyOAYUBAgEVjwHJAY8BzQECAROPAUGPAVoCARGPAbMBjwG7AQIBEA==</sads:DebugSymbol.Symbol>
   </TryCatch>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
-      <sap2010:ViewStateData Id="MessageBox_1" sap:VirtualizedContainerService.HintSize="464,59.2" />
-      <sap2010:ViewStateData Id="InputDialog_6" sap:VirtualizedContainerService.HintSize="464,92.8" />
-      <sap2010:ViewStateData Id="InputDialog_1" sap:VirtualizedContainerService.HintSize="464,92.8" />
-      <sap2010:ViewStateData Id="InputDialog_2" sap:VirtualizedContainerService.HintSize="464,92.8" />
-      <sap2010:ViewStateData Id="InputDialog_3" sap:VirtualizedContainerService.HintSize="464,92.8" />
-      <sap2010:ViewStateData Id="InputDialog_4" sap:VirtualizedContainerService.HintSize="464,92.8" />
-      <sap2010:ViewStateData Id="InputDialog_5" sap:VirtualizedContainerService.HintSize="464,92.8" />
-      <sap2010:ViewStateData Id="CreateDirectory_1" sap:VirtualizedContainerService.HintSize="243.2,22.4" />
-      <sap2010:ViewStateData Id="Assign_1" sap:VirtualizedContainerService.HintSize="243.2,60.8" />
-      <sap2010:ViewStateData Id="Sequence_4" sap:VirtualizedContainerService.HintSize="265.6,248">
-        <sap:WorkflowViewStateService.ViewState>
-          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-          </scg:Dictionary>
-        </sap:WorkflowViewStateService.ViewState>
-      </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="While_1" sap:VirtualizedContainerService.HintSize="464,408" />
-      <sap2010:ViewStateData Id="BuildDataTable_1" sap:VirtualizedContainerService.HintSize="464,59.2" />
-      <sap2010:ViewStateData Id="AddDataRow_1" sap:VirtualizedContainerService.HintSize="464,22.4" />
-      <sap2010:ViewStateData Id="AddDataRow_2" sap:VirtualizedContainerService.HintSize="464,22.4" />
-      <sap2010:ViewStateData Id="AddDataRow_3" sap:VirtualizedContainerService.HintSize="464,22.4" />
-      <sap2010:ViewStateData Id="AddDataRow_4" sap:VirtualizedContainerService.HintSize="464,22.4" />
-      <sap2010:ViewStateData Id="AddDataRow_5" sap:VirtualizedContainerService.HintSize="464,22.4" />
-      <sap2010:ViewStateData Id="AddDataRow_6" sap:VirtualizedContainerService.HintSize="464,22.4" />
+      <sap2010:ViewStateData Id="MessageBox_1" sap:VirtualizedContainerService.HintSize="414.4,59.2" />
+      <sap2010:ViewStateData Id="InputDialog_6" sap:VirtualizedContainerService.HintSize="414.4,92.8" />
+      <sap2010:ViewStateData Id="InputDialog_1" sap:VirtualizedContainerService.HintSize="414.4,92.8" />
+      <sap2010:ViewStateData Id="InputDialog_2" sap:VirtualizedContainerService.HintSize="414.4,92.8" />
+      <sap2010:ViewStateData Id="InputDialog_3" sap:VirtualizedContainerService.HintSize="414.4,92.8" />
+      <sap2010:ViewStateData Id="InputDialog_4" sap:VirtualizedContainerService.HintSize="414.4,92.8" />
+      <sap2010:ViewStateData Id="InputDialog_5" sap:VirtualizedContainerService.HintSize="414.4,92.8" />
+      <sap2010:ViewStateData Id="BuildDataTable_1" sap:VirtualizedContainerService.HintSize="414.4,59.2" />
+      <sap2010:ViewStateData Id="AddDataRow_1" sap:VirtualizedContainerService.HintSize="414.4,22.4" />
+      <sap2010:ViewStateData Id="AddDataRow_2" sap:VirtualizedContainerService.HintSize="414.4,22.4" />
+      <sap2010:ViewStateData Id="AddDataRow_3" sap:VirtualizedContainerService.HintSize="414.4,22.4" />
+      <sap2010:ViewStateData Id="AddDataRow_4" sap:VirtualizedContainerService.HintSize="414.4,22.4" />
+      <sap2010:ViewStateData Id="AddDataRow_5" sap:VirtualizedContainerService.HintSize="414.4,22.4" />
+      <sap2010:ViewStateData Id="AddDataRow_6" sap:VirtualizedContainerService.HintSize="414.4,22.4" />
       <sap2010:ViewStateData Id="ExcelWriteRange_2" sap:VirtualizedContainerService.HintSize="313.6,88" />
       <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="336,212.8">
         <sap:WorkflowViewStateService.ViewState>
@@ -197,10 +188,23 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="ExcelApplicationScope_1" sap:VirtualizedContainerService.HintSize="464,321.6" />
-      <sap2010:ViewStateData Id="WriteTextFile_1" sap:VirtualizedContainerService.HintSize="464,88" />
-      <sap2010:ViewStateData Id="MessageBox_6" sap:VirtualizedContainerService.HintSize="464,59.2" />
-      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="486.4,2491.2">
+      <sap2010:ViewStateData Id="ExcelApplicationScope_1" sap:VirtualizedContainerService.HintSize="414.4,321.6" />
+      <sap2010:ViewStateData Id="ExcelWriteCell_1" sap:VirtualizedContainerService.HintSize="313.6,88" />
+      <sap2010:ViewStateData Id="ExcelWriteCell_2" sap:VirtualizedContainerService.HintSize="313.6,88" />
+      <sap2010:ViewStateData Id="BuildDataTable_2" sap:VirtualizedContainerService.HintSize="313.6,59.2" />
+      <sap2010:ViewStateData Id="AddDataRow_7" sap:VirtualizedContainerService.HintSize="313.6,22.4" />
+      <sap2010:ViewStateData Id="ExcelWriteRange_3" sap:VirtualizedContainerService.HintSize="313.6,88" />
+      <sap2010:ViewStateData Id="Sequence_5" sap:VirtualizedContainerService.HintSize="336,630.4">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ExcelApplicationScope_2" sap:VirtualizedContainerService.HintSize="414.4,739.2" />
+      <sap2010:ViewStateData Id="WriteTextFile_1" sap:VirtualizedContainerService.HintSize="414.4,88" />
+      <sap2010:ViewStateData Id="MessageBox_6" sap:VirtualizedContainerService.HintSize="414.4,59.2" />
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="436.8,2822.4">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -216,7 +220,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Catch`1_1" sap:VirtualizedContainerService.HintSize="489.6,22.4">
+      <sap2010:ViewStateData Id="Catch`1_1" sap:VirtualizedContainerService.HintSize="440,22.4">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -224,8 +228,8 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="TryCatch_1" sap:VirtualizedContainerService.HintSize="504,2763.2" />
-      <sap2010:ViewStateData Id="Initialise_System_1" sap:VirtualizedContainerService.HintSize="544,2883.2" />
+      <sap2010:ViewStateData Id="TryCatch_1" sap:VirtualizedContainerService.HintSize="454.4,3094.4" />
+      <sap2010:ViewStateData Id="Initialise_System_1" sap:VirtualizedContainerService.HintSize="494.4,3214.4" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

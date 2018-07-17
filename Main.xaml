@@ -70,15 +70,12 @@
   </TextExpression.ReferencesForImplementation>
   <StateMachine sap2010:Annotation.AnnotationText="UiPath Attendance Framework &#xA;UAF" DisplayName="Attendance Evaluation and Processing Template" sap2010:WorkflowViewState.IdRef="StateMachine_1">
     <StateMachine.InitialState>
-      <State x:Name="__ReferenceID3" DisplayName="Check Initialized" sap2010:WorkflowViewState.IdRef="State_5">
+      <State x:Name="__ReferenceID4" DisplayName="Check Initialized" sap2010:WorkflowViewState.IdRef="State_5">
         <State.Entry>
           <Sequence DisplayName="check_INITIALIZED" sap2010:WorkflowViewState.IdRef="Sequence_22">
-            <Sequence.Variables>
-              <Variable x:TypeArguments="x:String" Name="variable1" />
-            </Sequence.Variables>
             <ui:ReadTextFile Content="[settings_json]" DisplayName="Read text file" FileName="[Environment.CurrentDirectory.ToString+&quot;\settings.json&quot;]" sap2010:WorkflowViewState.IdRef="ReadTextFile_1" />
             <ui:DeserializeJson x:TypeArguments="njl:JObject" DisplayName="Deserialize json" sap2010:WorkflowViewState.IdRef="DeserializeJson`1_1" JsonObject="[json]" JsonString="[settings_json]" />
-            <If Condition="[json(&quot;init&quot;).ToString = &quot;false&quot;]" sap2010:WorkflowViewState.IdRef="If_9">
+            <If Condition="[json(&quot;init&quot;).ToString.ToLower = &quot;false&quot;]" sap2010:WorkflowViewState.IdRef="If_9">
               <If.Then>
                 <Sequence sap2010:WorkflowViewState.IdRef="Sequence_38">
                   <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke Initialise System workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_19" UnSafe="False" WorkflowFileName="Framework\Initialise System.xaml">
@@ -86,16 +83,33 @@
                       <scg:Dictionary x:TypeArguments="x:String, Argument" />
                     </ui:InvokeWorkflowFile.Arguments>
                   </ui:InvokeWorkflowFile>
-                  <TerminateWorkflow DisplayName="Terminate workflow" Exception="[new BusinessRuleException(&quot;Setup Completed. Please launch the framework again to start processing.&quot;)]" sap2010:WorkflowViewState.IdRef="TerminateWorkflow_3" />
+                  <Assign sap2010:WorkflowViewState.IdRef="Assign_28">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="ui:GenericValue">[firstrun]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="ui:GenericValue">[True]</InArgument>
+                    </Assign.Value>
+                  </Assign>
                 </Sequence>
               </If.Then>
+              <If.Else>
+                <Assign sap2010:WorkflowViewState.IdRef="Assign_29">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="ui:GenericValue">[firstrun]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="ui:GenericValue">[False]</InArgument>
+                  </Assign.Value>
+                </Assign>
+              </If.Else>
             </If>
           </Sequence>
         </State.Entry>
         <State.Transitions>
-          <Transition DisplayName="Setup Complete" sap2010:WorkflowViewState.IdRef="Transition_8" Condition="[json(&quot;init&quot;).ToString = &quot;true&quot;]">
+          <Transition DisplayName="Setup Complete" sap2010:WorkflowViewState.IdRef="Transition_8" Condition="[not firstrun]">
             <Transition.To>
-              <State x:Name="__ReferenceID2" sap2010:Annotation.AnnotationText="Read Config, and Batches to process" DisplayName="Init" sap2010:WorkflowViewState.IdRef="State_2">
+              <State x:Name="__ReferenceID3" sap2010:Annotation.AnnotationText="Read Config, and Batches to process" DisplayName="Init" sap2010:WorkflowViewState.IdRef="State_2">
                 <State.Entry>
                   <TryCatch DisplayName="Catch intialization exceptions" sap2010:WorkflowViewState.IdRef="TryCatch_2">
                     <TryCatch.Try>
@@ -177,7 +191,7 @@
                         <State.Transitions>
                           <Transition DisplayName="More Batches" sap2010:WorkflowViewState.IdRef="Transition_28" Condition="[moreBatches]">
                             <Transition.To>
-                              <State x:Name="__ReferenceID4" sap2010:Annotation.AnnotationText="Read attendance from all exce files of a given batch&#xA;" DisplayName="Read Excel File" sap2010:WorkflowViewState.IdRef="State_7">
+                              <State x:Name="__ReferenceID5" sap2010:Annotation.AnnotationText="Read attendance from all exce files of a given batch&#xA;" DisplayName="Read Excel File" sap2010:WorkflowViewState.IdRef="State_7">
                                 <State.Entry>
                                   <TryCatch sap2010:WorkflowViewState.IdRef="TryCatch_3">
                                     <TryCatch.Try>
@@ -264,7 +278,7 @@
                                 <State.Transitions>
                                   <Transition DisplayName="Process Attendance" sap2010:WorkflowViewState.IdRef="Transition_13" Condition="[SystemError is Nothing]">
                                     <Transition.To>
-                                      <State x:Name="__ReferenceID5" sap2010:Annotation.AnnotationText="Create summary file for batch" DisplayName="Generate Summary" sap2010:WorkflowViewState.IdRef="State_8">
+                                      <State x:Name="__ReferenceID6" sap2010:Annotation.AnnotationText="Create summary file for batch" DisplayName="Generate Summary" sap2010:WorkflowViewState.IdRef="State_8">
                                         <State.Entry>
                                           <TryCatch sap2010:WorkflowViewState.IdRef="TryCatch_4">
                                             <TryCatch.Try>
@@ -316,7 +330,7 @@
                                         <State.Transitions>
                                           <Transition DisplayName="SummaryGenerated" sap2010:WorkflowViewState.IdRef="Transition_18" Condition="[SummaryPath &lt;&gt; &quot;&quot;]">
                                             <Transition.To>
-                                              <State x:Name="__ReferenceID6" sap2010:Annotation.AnnotationText="Send Email to people below threshold attendance" DisplayName="Notify" sap2010:WorkflowViewState.IdRef="State_9">
+                                              <State x:Name="__ReferenceID7" sap2010:Annotation.AnnotationText="Send Email to people below threshold attendance" DisplayName="Notify" sap2010:WorkflowViewState.IdRef="State_9">
                                                 <State.Entry>
                                                   <TryCatch sap2010:WorkflowViewState.IdRef="TryCatch_5">
                                                     <TryCatch.Try>
@@ -470,7 +484,7 @@
                           </Transition>
                           <Transition DisplayName="No more batches" sap2010:WorkflowViewState.IdRef="Transition_30" Condition="[not moreBatches]">
                             <Transition.To>
-                              <State x:Name="__ReferenceID7" DisplayName="End Process" sap2010:WorkflowViewState.IdRef="State_14" IsFinal="True">
+                              <State x:Name="__ReferenceID2" DisplayName="End Process" sap2010:WorkflowViewState.IdRef="State_14" IsFinal="True">
                                 <State.Entry>
                                   <ui:LogMessage sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Info" Message="No more batches to process" />
                                 </State.Entry>
@@ -488,21 +502,31 @@
               </State>
             </Transition.To>
           </Transition>
+          <Transition DisplayName="First Run" sap2010:WorkflowViewState.IdRef="Transition_31">
+            <Transition.Trigger>
+              <ui:LogMessage sap2010:WorkflowViewState.IdRef="LogMessage_8" Level="Info" Message="Setup completed, please relaunch framework to start execution." />
+            </Transition.Trigger>
+            <Transition.To>
+              <x:Reference>__ReferenceID2</x:Reference>
+            </Transition.To>
+            <Transition.Condition>[firstrun]</Transition.Condition>
+          </Transition>
         </State.Transitions>
         <State.Variables>
           <Variable x:TypeArguments="njl:JObject" Name="json" />
           <Variable x:TypeArguments="x:String" Name="settings_json" />
+          <Variable x:TypeArguments="ui:GenericValue" Name="firstrun" />
         </State.Variables>
       </State>
     </StateMachine.InitialState>
-    <x:Reference>__ReferenceID2</x:Reference>
     <x:Reference>__ReferenceID3</x:Reference>
     <x:Reference>__ReferenceID4</x:Reference>
     <x:Reference>__ReferenceID5</x:Reference>
     <x:Reference>__ReferenceID6</x:Reference>
+    <x:Reference>__ReferenceID7</x:Reference>
     <x:Reference>__ReferenceID1</x:Reference>
     <x:Reference>__ReferenceID0</x:Reference>
-    <x:Reference>__ReferenceID7</x:Reference>
+    <x:Reference>__ReferenceID2</x:Reference>
     <StateMachine.Variables>
       <Variable x:TypeArguments="s:Exception" Name="SystemError" />
       <Variable x:TypeArguments="ui:BusinessRuleException" Name="BusinessRuleException" />
@@ -516,23 +540,24 @@
       <Variable x:TypeArguments="scg:List(x:String)" Default="[new List(Of String)]" Name="Summary_Columns" />
       <Variable x:TypeArguments="x:String" Name="SummaryPath" />
     </StateMachine.Variables>
-    <sads:DebugSymbol.Symbol>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</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>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</sads:DebugSymbol.Symbol>
   </StateMachine>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
-      <sap2010:ViewStateData Id="ReadTextFile_1" sap:VirtualizedContainerService.HintSize="464,59.2" />
-      <sap2010:ViewStateData Id="DeserializeJson`1_1" sap:VirtualizedContainerService.HintSize="464,60.8" />
+      <sap2010:ViewStateData Id="ReadTextFile_1" sap:VirtualizedContainerService.HintSize="603.2,59.2" />
+      <sap2010:ViewStateData Id="DeserializeJson`1_1" sap:VirtualizedContainerService.HintSize="603.2,60.8" />
       <sap2010:ViewStateData Id="InvokeWorkflowFile_19" sap:VirtualizedContainerService.HintSize="313.6,88" />
-      <sap2010:ViewStateData Id="TerminateWorkflow_3" sap:VirtualizedContainerService.HintSize="313.6,22.4" />
-      <sap2010:ViewStateData Id="Sequence_38" sap:VirtualizedContainerService.HintSize="336,275.2">
+      <sap2010:ViewStateData Id="Assign_28" sap:VirtualizedContainerService.HintSize="313.6,60.8" />
+      <sap2010:ViewStateData Id="Sequence_38" sap:VirtualizedContainerService.HintSize="336,313.6">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="If_9" sap:VirtualizedContainerService.HintSize="464,425.6" />
-      <sap2010:ViewStateData Id="Sequence_22" sap:VirtualizedContainerService.HintSize="486.4,750.4">
+      <sap2010:ViewStateData Id="Assign_29" sap:VirtualizedContainerService.HintSize="243.2,60.8" />
+      <sap2010:ViewStateData Id="If_9" sap:VirtualizedContainerService.HintSize="603.2,464" />
+      <sap2010:ViewStateData Id="Sequence_22" sap:VirtualizedContainerService.HintSize="625.6,788.8">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -823,7 +848,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="State_7" sap:VirtualizedContainerService.HintSize="686.4,2133.6">
+      <sap2010:ViewStateData Id="State_7" sap:VirtualizedContainerService.HintSize="220.8,120.8">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">419.6,289.6</av:Point>
@@ -905,7 +930,17 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="State_5" sap:VirtualizedContainerService.HintSize="145.6,64">
+      <sap2010:ViewStateData Id="LogMessage_8" sap:VirtualizedContainerService.HintSize="313.6,92.8" />
+      <sap2010:ViewStateData Id="Transition_31" sap:VirtualizedContainerService.HintSize="430.4,545.6">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:PointCollection x:Key="ConnectorLocation">263.68,28 263.68,16.96 1086.8,16.96 1086.8,376.96 1056.8,376.96</av:PointCollection>
+            <x:Int32 x:Key="SrcConnectionPointIndex">62</x:Int32>
+            <x:Int32 x:Key="DestConnectionPointIndex">32</x:Int32>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="State_5" sap:VirtualizedContainerService.HintSize="651.2,1182.4">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">147.2,28</av:Point>
@@ -916,19 +951,19 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="StateMachine_1" sap:VirtualizedContainerService.HintSize="1089.6,954.4">
+      <sap2010:ViewStateData Id="StateMachine_1" sap:VirtualizedContainerService.HintSize="1137.6,1007.2">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
             <av:Point x:Key="ShapeLocation">30,12.4</av:Point>
-            <x:Double x:Key="StateContainerWidth">1075.2</x:Double>
-            <x:Double x:Key="StateContainerHeight">873.6</x:Double>
+            <x:Double x:Key="StateContainerWidth">1124</x:Double>
+            <x:Double x:Key="StateContainerHeight">927.20000000000027</x:Double>
             <av:PointCollection x:Key="ConnectorLocation">90,42.48 120,42.48 120,60 147.2,60</av:PointCollection>
             <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Main2_1" sap:VirtualizedContainerService.HintSize="1129.6,1034.4" />
+      <sap2010:ViewStateData Id="Main2_1" sap:VirtualizedContainerService.HintSize="1177.6,1087.2" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

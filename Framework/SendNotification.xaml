@@ -148,7 +148,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="SendNotification_1" sap:VirtualizedContainerService.HintSize="579.2,1467.2" />
+      <sap2010:ViewStateData Id="SendNotification_1" sap:VirtualizedContainerService.HintSize="579.2,1507.2" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

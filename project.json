@@ -1,6 +1,6 @@
 {
   "name": "Attendance Framework UAF",
-  "description": "Robotic Enterprise Framework",
+  "description": "Attendance Management Framework",
   "main": "Main.xaml",
   "dependencies": {},
   "excludedData": [

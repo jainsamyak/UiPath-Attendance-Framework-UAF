@@ -72,6 +72,7 @@
   <Sequence DisplayName="SendNotification" sap2010:WorkflowViewState.IdRef="Sequence_2">
     <Sequence.Variables>
       <Variable x:TypeArguments="sd:DataTable" Name="SummaryDT" />
+      <Variable x:TypeArguments="sd:DataTable" Name="dt_IndividualAttendance" />
     </Sequence.Variables>
     <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="Notifying people" />
     <ui:ExcelApplicationScope Password="{x:Null}" CreateNewFile="False" DisplayName="Excel application scope" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_1" Visible="False" WorkbookPath="[in_SummaryPath]">
@@ -86,6 +87,19 @@
         </ActivityAction>
       </ui:ExcelApplicationScope.Body>
     </ui:ExcelApplicationScope>
+    <ui:BuildDataTable DataTable="[dt_IndividualAttendance]" DisplayName="Build data table" sap2010:WorkflowViewState.IdRef="BuildDataTable_2" TableInfo="&lt;NewDataSet&gt;&#xD;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xD;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xD;&#xA;      &lt;xs:complexType&gt;&#xD;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xD;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xD;&#xA;            &lt;xs:complexType&gt;&#xD;&#xA;            &lt;/xs:complexType&gt;&#xD;&#xA;          &lt;/xs:element&gt;&#xD;&#xA;        &lt;/xs:choice&gt;&#xD;&#xA;      &lt;/xs:complexType&gt;&#xD;&#xA;    &lt;/xs:element&gt;&#xD;&#xA;  &lt;/xs:schema&gt;&#xD;&#xA;&lt;/NewDataSet&gt;" />
+    <ui:ForEach x:TypeArguments="x:Object" DisplayName="For each" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[SummaryDT.Columns]">
+      <ui:ForEach.Body>
+        <ActivityAction x:TypeArguments="x:Object">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="x:Object" Name="column" />
+          </ActivityAction.Argument>
+          <Sequence DisplayName="Body" sap2010:WorkflowViewState.IdRef="Sequence_5">
+            <ui:AddDataColumn x:TypeArguments="x:Object" Column="{x:Null}" DefaultValue="{x:Null}" AllowDBNull="True" AutoIncrement="False" ColumnName="[column.ToString]" DataTable="[dt_IndividualAttendance]" DisplayName="Add data column" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_1" MaxLength="100" Unique="False" />
+          </Sequence>
+        </ActivityAction>
+      </ui:ForEach.Body>
+    </ui:ForEach>
     <ui:ForEachRow DataTable="[SummaryDT]" DisplayName="For each row" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
       <ui:ForEachRow.Body>
         <ActivityAction x:TypeArguments="sd:DataRow">
@@ -96,13 +110,22 @@
             <If Condition="[Convert.ToDouble(row(&quot;Overall&quot;).ToString) &lt; Convert.ToDouble(in_Config(&quot;Attendance Threshold&quot;).ToString)]" sap2010:WorkflowViewState.IdRef="If_3">
               <If.Then>
                 <Sequence sap2010:WorkflowViewState.IdRef="Sequence_4">
-                  <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke SendEmail workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="SendEmail.xaml">
+                  <InvokeMethod DisplayName="Invoke method" sap2010:WorkflowViewState.IdRef="InvokeMethod_1" MethodName="ImportRow">
+                    <InvokeMethod.TargetObject>
+                      <InArgument x:TypeArguments="sd:DataTable">[dt_IndividualAttendance]</InArgument>
+                    </InvokeMethod.TargetObject>
+                    <InArgument x:TypeArguments="sd:DataRow">[row]</InArgument>
+                  </InvokeMethod>
+                  <ui:WriteRange AddHeaders="True" DataTable="[dt_IndividualAttendance]" DisplayName="Write range" sap2010:WorkflowViewState.IdRef="WriteRange_1" SheetName="Sheet1" StartingCell="A1" WorkbookPath="[in_Config(&quot;Output Directory&quot;).ToString+&quot;temp&quot;+row(&quot;ID&quot;).ToString+&quot;.xlsx&quot;]" />
+                  <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke SendEmail workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="Framework\SendEmail.xaml">
                     <ui:InvokeWorkflowFile.Arguments>
                       <InArgument x:TypeArguments="x:String" x:Key="in_NAME">[row("Name").ToString]</InArgument>
-                      <InArgument x:TypeArguments="x:String" x:Key="in_AttachPath">[in_Config("Output Directory").ToString + "\Summary.xlsx"]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_AttachPath">[in_Config("Output Directory").ToString+"temp"+row("ID").ToString+".xlsx"]</InArgument>
                       <InArgument x:TypeArguments="x:String" x:Key="in_Email_ID">[row("Email").ToString]</InArgument>
                     </ui:InvokeWorkflowFile.Arguments>
                   </ui:InvokeWorkflowFile>
+                  <ui:Delete ContinueOnError="{x:Null}" sap2010:WorkflowViewState.IdRef="Delete_1" Path="[in_Config(&quot;Output Directory&quot;).ToString+&quot;temp&quot;+row(&quot;ID&quot;).ToString+&quot;.xlsx&quot;]" />
+                  <ui:ClearDataTable DataTable="[dt_IndividualAttendance]" DisplayName="Clear data table" sap2010:WorkflowViewState.IdRef="ClearDataTable_1" />
                 </Sequence>
               </If.Then>
             </If>
@@ -110,7 +133,7 @@
         </ActivityAction>
       </ui:ForEachRow.Body>
     </ui:ForEachRow>
-    <sads:DebugSymbol.Symbol>d2BDOlxVc2Vyc1xTYW15YWtcRG9jdW1lbnRzXFVpUGF0aFxVaVBhdGgtQXR0ZW5kYW5jZS1GcmFtZXdvcmstVUFGXEZyYW1ld29ya1xTZW5kTm90aWZpY2F0aW9uLnhhbWwVSANyDgIBAUwFTIcBAgEYTQVYIAIBD1kFcBUCAQJMckyEAQIBGU3GAU3YAQIBFlMLVRYCARBZHlkrAgENXwttFgIBA1QNVLYBAgERYA1sEgIBBFQ8VEkCARRUnAFUoAECARNUqwFUswECARJgG2CeAQIBBWIRahwCAQZjE2krAgEHZlRmjgECAQtnUmdpAgEKZU5lZAIBCWPEAWPUAQIBCA==</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d2BDOlxVc2Vyc1xTYW15YWtcRG9jdW1lbnRzXFVpUGF0aFxVaVBhdGgtQXR0ZW5kYW5jZS1GcmFtZXdvcmstVUFGXEZyYW1ld29ya1xTZW5kTm90aWZpY2F0aW9uLnhhbWwpSAOJAQ4CAQFNBU2HAQIBMk4FWSACASlaBVqKCAIBJlsFZhICAR5nBYcBFQIBAk1yTYQBAgEzTsYBTtgBAgEwVAtWFgIBKloiWj0CASdbeFuNAQIBJWELYxYCAR9nHmcrAgEcbQuEARYCAQNVDVW2AQIBK2INYsUCAgEgbg2DARICAQRVPFVJAgEuVZwBVaABAgEtVasBVbMBAgEsYpgBYqsBAgEjYrYBYtEBAgEhbhtungECAQVwEYEBHAIBBnETdiICARd3E3fMAgIBEXgTfisCAQx/E3/gAQIBCoABE4ABoAECAQd1PnVDAgEac0JzWwIBGHfDAXfHAQIBFnc+d1kCARR3rQF3tQECARN31QF3yQICARJ7VHueAQIBEHxSfGkCAQ96TnpkAgEOeMQBeN4BAgENf2l/3QECAQuAATCAAUsCAQg=</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -124,31 +147,45 @@
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="ExcelApplicationScope_1" sap:VirtualizedContainerService.HintSize="516.8,292.8" />
-      <sap2010:ViewStateData Id="InvokeWorkflowFile_3" sap:VirtualizedContainerService.HintSize="313.6,88" />
-      <sap2010:ViewStateData Id="Sequence_4" sap:VirtualizedContainerService.HintSize="336,212.8">
+      <sap2010:ViewStateData Id="BuildDataTable_2" sap:VirtualizedContainerService.HintSize="516.8,59.2" />
+      <sap2010:ViewStateData Id="AddDataColumn`1_1" sap:VirtualizedContainerService.HintSize="200,22.4" />
+      <sap2010:ViewStateData Id="Sequence_5" sap:VirtualizedContainerService.HintSize="222.4,147.2">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="If_3" sap:VirtualizedContainerService.HintSize="464,363.2" />
-      <sap2010:ViewStateData Id="Sequence_3" sap:VirtualizedContainerService.HintSize="486.4,488">
+      <sap2010:ViewStateData Id="ForEach`1_1" sap:VirtualizedContainerService.HintSize="516.8,281.6" />
+      <sap2010:ViewStateData Id="InvokeMethod_1" sap:VirtualizedContainerService.HintSize="313.6,134.4" />
+      <sap2010:ViewStateData Id="WriteRange_1" sap:VirtualizedContainerService.HintSize="313.6,115.2" />
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_4" sap:VirtualizedContainerService.HintSize="313.6,88" />
+      <sap2010:ViewStateData Id="Delete_1" sap:VirtualizedContainerService.HintSize="313.6,22.4" />
+      <sap2010:ViewStateData Id="ClearDataTable_1" sap:VirtualizedContainerService.HintSize="313.6,22.4" />
+      <sap2010:ViewStateData Id="Sequence_4" sap:VirtualizedContainerService.HintSize="336,667.2">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="ForEachRow_1" sap:VirtualizedContainerService.HintSize="516.8,636.8" />
-      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="539.2,1227.2">
+      <sap2010:ViewStateData Id="If_3" sap:VirtualizedContainerService.HintSize="464,817.6" />
+      <sap2010:ViewStateData Id="Sequence_3" sap:VirtualizedContainerService.HintSize="486.4,942.4">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="SendNotification_1" sap:VirtualizedContainerService.HintSize="579.2,1507.2" />
+      <sap2010:ViewStateData Id="ForEachRow_1" sap:VirtualizedContainerService.HintSize="516.8,1091.2" />
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="539.2,2102.4">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="SendNotification_1" sap:VirtualizedContainerService.HintSize="579.2,2542.4" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

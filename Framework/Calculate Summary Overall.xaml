@@ -70,6 +70,7 @@
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Sequence DisplayName="Calculate Summary Overall" sap2010:WorkflowViewState.IdRef="Sequence_2">
+    <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="Calculating overall attendance" />
     <ui:ExcelApplicationScope Password="{x:Null}" CreateNewFile="False" DisplayName="Excel application scope" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_1" Visible="False" WorkbookPath="[in_SummaryPath]">
       <ui:ExcelApplicationScope.Body>
         <ActivityAction x:TypeArguments="ui:WorkbookApplication">
@@ -83,7 +84,7 @@
             </Sequence.Variables>
             <ui:ExcelReadRange AddHeaders="True" DataTable="[dt_Summary]" DisplayName="Read Range" sap2010:WorkflowViewState.IdRef="ExcelReadRange_1" Range="A2" SheetName="Sheet1" />
             <ui:AddDataColumn x:TypeArguments="x:Object" Column="{x:Null}" DefaultValue="{x:Null}" AllowDBNull="True" AutoIncrement="False" ColumnName="Overall" DataTable="[dt_Summary]" DisplayName="Add data column" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_1" MaxLength="100" Unique="False" />
-            <ui:ForEachRow DataTable="[dt_Summary]" DisplayName="For each row" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
+            <ui:ForEachRow DataTable="[dt_Summary]" DisplayName="For each row in Summary file" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
               <ui:ForEachRow.Body>
                 <ActivityAction x:TypeArguments="sd:DataRow">
                   <ActivityAction.Argument>
@@ -156,10 +157,11 @@
         </ActivityAction>
       </ui:ExcelApplicationScope.Body>
     </ui:ExcelApplicationScope>
-    <sads:DebugSymbol.Symbol>d2lDOlxVc2Vyc1xTYW15YWtcRG9jdW1lbnRzXFVpUGF0aFxVaVBhdGgtQXR0ZW5kYW5jZS1GcmFtZXdvcmstVUFGXEZyYW1ld29ya1xDYWxjdWxhdGUgU3VtbWFyeSBPdmVyYWxsLnhhbWwoSAOgAQ4CAQFJBZ4BIAIBAknGAUnYAQIBNk8LmwEWAgEDVA1UtwECATFVDVWuAgIBLVYNmQEdAgEJmgENmgHBAQIBBFQ8VEoCATRUnQFUoQECATNUrAFUtAECATJVmAFVoQECATBVrAFVugECAS5WJlY0AgErXBOWAR4CAQqaAboBmgG+AQIBCJoBPZoBSwIBBpoBpAGaAawBAgEFYRVoHgIBJ2kVcB4CASNxFY0BHwIBEI4BFZUBHgIBC2Y/ZoUBAgEqY0BjTAIBKG5AbkECASZrQWtIAgEkdSp1jwECASJ2F4wBIgIBEZMBQJMBYgIBDZABQZABgAECAQx3GXspAgEbfBmDASICAReEARmLASICARJ5THlYAgEgd7kBd8ABAgEed1x3agIBHIEBRIEBVgIBGn5FfkwCARiJAUOJAVECARWGAUSGAVACARM=</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d2lDOlxVc2Vyc1xTYW15YWtcRG9jdW1lbnRzXFVpUGF0aFxVaVBhdGgtQXR0ZW5kYW5jZS1GcmFtZXdvcmstVUFGXEZyYW1ld29ya1xDYWxjdWxhdGUgU3VtbWFyeSBPdmVyYWxsLnhhbWwqSAOhAQ4CAQFJBUmVAQIBOEoFnwEgAgECSXJJkgECATlKxgFK2AECATZQC5wBFgIBA1UNVbcBAgExVg1WrgICAS1XDZoBHQIBCZsBDZsBwQECAQRVPFVKAgE0VZ0BVaEBAgEzVawBVbQBAgEyVpgBVqEBAgEwVqwBVroBAgEuVyZXNAIBK10TlwEeAgEKmwG6AZsBvgECAQibAT2bAUsCAQabAaQBmwGsAQIBBWIVaR4CASdqFXEeAgEjchWOAR8CARCPARWWAR4CAQtnP2eFAQIBKmRAZEwCAShvQG9BAgEmbEFsSAIBJHYqdo8BAgEidxeNASICARGUAUCUAWICAQ2RAUGRAYABAgEMeBl8KQIBG30ZhAEiAgEXhQEZjAEiAgESekx6WAIBIHi5AXjAAQIBHnhceGoCARyCAUSCAVYCARp/RX9MAgEYigFDigFRAgEVhwFEhwFQAgET</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="LogMessage_1" sap:VirtualizedContainerService.HintSize="553.6,92.8" />
       <sap2010:ViewStateData Id="ExcelReadRange_1" sap:VirtualizedContainerService.HintSize="516.8,59.2" />
       <sap2010:ViewStateData Id="AddDataColumn`1_1" sap:VirtualizedContainerService.HintSize="516.8,22.4" />
       <sap2010:ViewStateData Id="Assign_1" sap:VirtualizedContainerService.HintSize="464,60.8" />
@@ -193,14 +195,14 @@
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="ExcelApplicationScope_1" sap:VirtualizedContainerService.HintSize="553.6,1651.2" />
-      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="576,1776">
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="576,1908.8">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Calculate_Summary_Overall_1" sap:VirtualizedContainerService.HintSize="616,1896" />
+      <sap2010:ViewStateData Id="Calculate_Summary_Overall_1" sap:VirtualizedContainerService.HintSize="616,2028.8" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

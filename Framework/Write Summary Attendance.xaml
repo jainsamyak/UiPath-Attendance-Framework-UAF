@@ -94,7 +94,7 @@
               </Assign.Value>
             </Assign>
             <ui:ExcelReadRange AddHeaders="True" DataTable="[dt_Old]" DisplayName="Read Range" sap2010:WorkflowViewState.IdRef="ExcelReadRange_1" Range="A2" SheetName="Sheet1" />
-            <ui:ForEach x:TypeArguments="sd:DataTable" DisplayName="For each" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[in_Attendance]">
+            <ui:ForEach x:TypeArguments="sd:DataTable" DisplayName="For each " sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[in_Attendance]">
               <ui:ForEach.Body>
                 <ActivityAction x:TypeArguments="sd:DataTable">
                   <ActivityAction.Argument>
@@ -165,7 +165,7 @@
         </ActivityAction>
       </ui:ExcelApplicationScope.Body>
     </ui:ExcelApplicationScope>
-    <sads:DebugSymbol.Symbol>d2hDOlxVc2Vyc1xTYW15YWtcRG9jdW1lbnRzXFVpUGF0aFxVaVBhdGgtQXR0ZW5kYW5jZS1GcmFtZXdvcmstVUFGXEZyYW1ld29ya1xXcml0ZSBTdW1tYXJ5IEF0dGVuZGFuY2UueGFtbCdJA6kBDgIBAU0FpwEgAgECTbABTcIBAgE0UwukARYCAQNYDV8WAgEwYA1gswECASthDaIBGgIBCaMBDaMBvQECAQRdP11CAgEzWkBaTwIBMWA8YEYCAS5gmQFgnQECAS1gqAFgsAECASxhhAFhlQECASpnE58BHgIBCqMBtgGjAboBAgEIowE9owFHAgEGowGgAaMBqAECAQVrFXIeAgEkcxVztwICASB0FXseAgEcfBWWASUCARCXARWeAR4CAQtwR3BpAgEnbUhtVAIBJXOgAXOuAQIBI3O5AXPDAQIBIXlHeUoCAR92SHZUAgEdfC58NgIBGoIBG5MBJgIBEZwBR5wBWAIBDpkBSJkBVwIBDIMBHYoBJgIBF4sBHZIBJgIBEogBSIgBbwIBGYUBSYUBfAIBGJABT5ABXQIBFY0BUI0BXAIBEw==</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d2hDOlxVc2Vyc1xTYW15YWtcRG9jdW1lbnRzXFVpUGF0aFxVaVBhdGgtQXR0ZW5kYW5jZS1GcmFtZXdvcmstVUFGXEZyYW1ld29ya1xXcml0ZSBTdW1tYXJ5IEF0dGVuZGFuY2UueGFtbCdJA6kBDgIBAU0FpwEgAgECTbABTcIBAgE0UwukARYCAQNYDV8WAgEwYA1gswECASthDaIBGgIBCaMBDaMBvQECAQRdP11CAgEzWkBaTwIBMWA8YEYCAS5gmQFgnQECAS1gqAFgsAECASxhhQFhlgECASpnE58BHgIBCqMBtgGjAboBAgEIowE9owFHAgEGowGgAaMBqAECAQVrFXIeAgEkcxVztwICASB0FXseAgEcfBWWASUCARCXARWeAR4CAQtwR3BpAgEnbUhtVAIBJXOgAXOuAQIBI3O5AXPDAQIBIXlHeUoCAR92SHZUAgEdfC58NgIBGoIBG5MBJgIBEZwBR5wBWAIBDpkBSJkBVwIBDIMBHYoBJgIBF4sBHZIBJgIBEogBSIgBbwIBGYUBSYUBfAIBGJABT5ABXQIBFY0BUI0BXAIBEw==</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -209,7 +209,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Write_Summary_1" sap:VirtualizedContainerService.HintSize="476.8,3305.6" />
+      <sap2010:ViewStateData Id="Write_Summary_1" sap:VirtualizedContainerService.HintSize="476.8,1905.6" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

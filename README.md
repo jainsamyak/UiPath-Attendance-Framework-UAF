@@ -43,7 +43,7 @@ The framework offers the fetaure of automatic reporting of people below the give
 ```
 ## LICENSE
 MIT License
-Please view the [LICENSE]() file for more details.
+Please view the [LICENSE](https://github.com/jainsamyak/UiPath-Attendance-Framework-UAF/blob/master/LICENSE) file for more details.
 
 
 

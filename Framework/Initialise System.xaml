@@ -68,7 +68,7 @@
           <Variable x:TypeArguments="ui:GenericValue" Name="at_threshold" />
           <Variable x:TypeArguments="ui:GenericValue" Name="at_format" />
           <Variable x:TypeArguments="ui:GenericValue" Name="input_dir" />
-          <Variable x:TypeArguments="sd:DataTable" Name="dt_Config" />
+          <Variable x:TypeArguments="sd:DataTable" Default="[new DataTable()]" Name="dt_Config" />
           <Variable x:TypeArguments="ui:GenericValue" Name="output_dir" />
           <Variable x:TypeArguments="ui:GenericValue" Name="org_name" />
         </Sequence.Variables>
@@ -138,9 +138,9 @@
                 </Sequence.Variables>
                 <ui:ExcelWriteCell Cell="A1" DisplayName="Write Cell" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_1" SheetName="Sheet1" Text="Organization:" />
                 <ui:ExcelWriteCell Cell="B1" DisplayName="Write Cell" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_2" SheetName="Sheet1" Text="[org_name]" />
-                <ui:BuildDataTable DataTable="[dt_Transactionheaders]" DisplayName="Build data table" sap2010:WorkflowViewState.IdRef="BuildDataTable_2" TableInfo="&lt;NewDataSet&gt;&#xD;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xD;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xD;&#xA;      &lt;xs:complexType&gt;&#xD;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xD;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xD;&#xA;            &lt;xs:complexType&gt;&#xD;&#xA;              &lt;xs:sequence&gt;&#xD;&#xA;                &lt;xs:element name=&quot;Timestamp&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;Robot_x0020_Info&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;Message&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;              &lt;/xs:sequence&gt;&#xD;&#xA;            &lt;/xs:complexType&gt;&#xD;&#xA;          &lt;/xs:element&gt;&#xD;&#xA;        &lt;/xs:choice&gt;&#xD;&#xA;      &lt;/xs:complexType&gt;&#xD;&#xA;    &lt;/xs:element&gt;&#xD;&#xA;  &lt;/xs:schema&gt;&#xD;&#xA;&lt;/NewDataSet&gt;" />
+                <ui:BuildDataTable DataTable="[dt_Transactionheaders]" DisplayName="Build data table" sap2010:WorkflowViewState.IdRef="BuildDataTable_2" TableInfo="&lt;NewDataSet&gt;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xA;      &lt;xs:complexType&gt;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xA;            &lt;xs:complexType&gt;&#xA;              &lt;xs:sequence&gt;&#xA;                &lt;xs:element name=&quot;Timestamp&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Robot_x0020_Info&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Message&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;              &lt;/xs:sequence&gt;&#xA;            &lt;/xs:complexType&gt;&#xA;          &lt;/xs:element&gt;&#xA;        &lt;/xs:choice&gt;&#xA;      &lt;/xs:complexType&gt;&#xA;    &lt;/xs:element&gt;&#xA;  &lt;/xs:schema&gt;&#xA;&lt;/NewDataSet&gt;" />
                 <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{DateTime.Now,&quot;&quot;,&quot;System initialized and setup.&quot;}]" DataTable="[dt_Transactionheaders]" DisplayName="Add data row" sap2010:WorkflowViewState.IdRef="AddDataRow_7" />
-                <ui:ExcelWriteRange AddHeaders="True" DataTable="[dt_Transactionheaders]" DisplayName="Write Range" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_3" SheetName="Sheet1" StartingCell="A1" />
+                <ui:ExcelWriteRange AddHeaders="True" DataTable="[dt_Transactionheaders]" DisplayName="Write Range" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_3" SheetName="Sheet1" StartingCell="A2" />
               </Sequence>
             </ActivityAction>
           </ui:ExcelApplicationScope.Body>
@@ -156,13 +156,13 @@
             <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
           </ActivityAction.Argument>
           <Sequence sap2010:WorkflowViewState.IdRef="Sequence_3">
-            <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Error" Message="Unable to initialise system!" />
+            <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Error" Message="[&quot;Unable to initialise system!&quot;+exception.Message]" />
             <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" Buttons="Ok" DisplayName="Message box" sap2010:WorkflowViewState.IdRef="MessageBox_3" Text="Unable to initialise system! Please try again.." TopMost="True" />
           </Sequence>
         </ActivityAction>
       </Catch>
     </TryCatch.Catches>
-    <sads:DebugSymbol.Symbol>d2FDOlxVc2Vyc1xTYW15YWtcRG9jdW1lbnRzXFVpUGF0aFxVaVBhdGgtQXR0ZW5kYW5jZS1GcmFtZXdvcmstVUFGXEZyYW1ld29ya1xJbml0aWFsaXNlIFN5c3RlbS54YW1sVj8DpgEOAgEBQQeWARICAQeeAQuhARYCAQJLCUvuAQIBZkwJUBoCAWFRCVUaAgFcVglaGgIBV1sJXxoCAVFgCWQaAgFMZQlpGgIBR2oJauoKAgFEawlr0wECAUBsCWzZAQIBPG0JbdEBAgE4bglu0wECATRvCW/PAQIBMHAJcM0BAgEscQmAASQCASSBAQmTASQCAQ2UAQmUAYwCAgEKlQEJlQGhAgIBCJ8BDZ8BnAECAQWgAQ2gAeUBAgEDS54BS9wBAgFnTJABTLUBAgFlTjxORgIBY0y8AUzPAQIBYlGQAVHKAQIBYFM8U0YCAV5R0QFR5AECAV1WkAFWxQECAVtYPFhKAgFZVswBVuIBAgFYW31bsQECAVZbugFb7wECAVVdPF1HAgFTW/YBW4kCAgFSYJABYL4BAgFQYjxiRwIBTmDFAWDWAQIBTWWQAWW/AQIBS2c8Z0gCAUllxgFl2AECAUhqJmozAgFFa3lrhgECAUJrNGtuAgFBbH9sjAECAT5sNGx0AgE9bXdthAECATptNG1sAgE5bnluhgECATZuNG5uAgE1b3VvggECATJvNG9qAgExcHNwgAECAS5wNHBoAgEtccoBcZECAgErdw99GgIBJYEBtAGBAYECAgEjhwEPkAEaAgEOlAG+AZQBiQICAQyUAUKUAYYBAgELlQGeAZUBjwICAQmfAXufAZkBAgEGoAGiAaAB0wECAQR8EXzGAQIBJosBEYsBpAECAR+MARGMAaEBAgEbjQERjQHkCwIBGI4BEY4B9gECARSPARGPAdABAgEPfL8BfMMBAgEqfEF8TgIBKHynAXyxAQIBJ4sBKYsBLQIBIosBkgGLAaEBAgEhiwGEAYsBjAECASCMASmMAS0CAR6MAZIBjAGeAQIBHYwBhAGMAYwBAgEcjQEujQFHAgEZjgGQAY4BqQECARaOATyOAYUBAgEVjwHJAY8BzQECAROPAUGPAVoCARGPAbMBjwG7AQIBEA==</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d2FDOlxVc2Vyc1xTYW15YWtcRG9jdW1lbnRzXFVpUGF0aFxVaVBhdGgtQXR0ZW5kYW5jZS1GcmFtZXdvcmstVUFGXEZyYW1ld29ya1xJbml0aWFsaXNlIFN5c3RlbS54YW1sVz8DpgEOAgEBQQeWARICAQieAQuhARYCAQJHPEdPAgEJSwlL7gECAWhMCVAaAgFjUQlVGgIBXlYJWhoCAVlbCV8aAgFTYAlkGgIBTmUJaRoCAUlqCWrqCgIBRmsJa9MBAgFCbAls2QECAT5tCW3RAQIBOm4JbtMBAgE2bwlvzwECATJwCXDNAQIBLnEJgAEkAgEmgQEJkwEkAgEPlAEJlAGMAgIBDJUBCZUBoQICAQqfAQ2fAbwBAgEFoAENoAHlAQIBA0ueAUvcAQIBaUyQAUy1AQIBZ048TkYCAWVMvAFMzwECAWRRkAFRygECAWJTPFNGAgFgUdEBUeQBAgFfVpABVsUBAgFdWDxYSgIBW1bMAVbiAQIBWlt9W7EBAgFYW7oBW+8BAgFXXTxdRwIBVVv2AVuJAgIBVGCQAWC+AQIBUmI8YkcCAVBgxQFg1gECAU9lkAFlvwECAU1nPGdIAgFLZcYBZdgBAgFKaiZqMwIBR2t5a4YBAgFEazRrbgIBQ2x/bIwBAgFAbDRsdAIBP213bYQBAgE8bTRtbAIBO255boYBAgE4bjRubgIBN291b4IBAgE0bzRvagIBM3BzcIABAgEwcDRwaAIBL3HKAXGRAgIBLXcPfRoCASeBAbQBgQGBAgIBJYcBD5ABGgIBEJQBvgGUAYkCAgEOlAFClAGGAQIBDZUBngGVAY8CAgELnwF7nwG5AQIBBqABogGgAdMBAgEEfBF8xgECASiLARGLAaQBAgEhjAERjAGhAQIBHY0BEY0BigsCARqOARGOAfYBAgEWjwERjwHQAQIBEXy/AXzDAQIBLHxBfE4CASp8pwF8sQECASmLASmLAS0CASSLAZIBiwGhAQIBI4sBhAGLAYwBAgEijAEpjAEtAgEgjAGSAYwBngECAR+MAYQBjAGMAQIBHo0BLo0BRwIBG44BkAGOAakBAgEYjgE8jgGFAQIBF48ByQGPAc0BAgEVjwFBjwFaAgETjwGzAY8BuwECARI=</sads:DebugSymbol.Symbol>
   </TryCatch>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -228,8 +228,8 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="TryCatch_1" sap:VirtualizedContainerService.HintSize="454.4,3094.4" />
-      <sap2010:ViewStateData Id="Initialise_System_1" sap:VirtualizedContainerService.HintSize="494.4,3214.4" />
+      <sap2010:ViewStateData Id="TryCatch_1" sap:VirtualizedContainerService.HintSize="454.4,3174.4" />
+      <sap2010:ViewStateData Id="Initialise_System_1" sap:VirtualizedContainerService.HintSize="494.4,3374.4" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

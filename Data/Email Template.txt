@@ -1,0 +1,4 @@
+Dear {0},
+Greetings from {1}. Please find attached with this email your aggregated attendance excel sheet as of {2}.
+
+Thanks.

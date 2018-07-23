@@ -41,6 +41,10 @@ The framework offers the fetaure of automatic reporting of people below the give
 5. Generate Summary: Creates the aggregated summary file and appends the overall attendance of each record in each head.
 6. Notify: Reads the summary created and notifies the people below threshold attendance.  
 ```
+
+## Resetting the framework
+The framework contains a **settings.json** file having a key "init". To reset the system entirely, simply set the value of this JSON key to "false".
+
 ## LICENSE
 MIT License
 Please view the [LICENSE]() file for more details.

@@ -43,7 +43,7 @@ The framework offers the fetaure of automatic reporting of people below the give
 ```
 
 ## Resetting the framework
-The framework contains a **settings.json** file having a key "init". To reset the system entirely, simply set the value of this JSON key to "false".
+Simply run the **ResetFramework.xaml** file and it will reset the entire framework along with all settings and files.
 
 ## LICENSE
 MIT License

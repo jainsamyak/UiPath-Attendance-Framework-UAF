@@ -1,4 +1,4 @@
-﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="SendEmail"
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="ResetFramework" mva:VisualBasic.Settings="{x:Null}" sap2010:WorkflowViewState.IdRef="ResetFramework_1"
  xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
  xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
@@ -10,18 +10,6 @@
  xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
  xmlns:ui="http://schemas.uipath.com/workflow/activities"
  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-  <x:Members>
-    <x:Property Name="in_NAME" Type="InArgument(x:String)" />
-    <x:Property Name="in_AttachPath" Type="InArgument(x:String)" />
-    <x:Property Name="in_Email_ID" Type="InArgument(x:String)" />
-    <x:Property Name="in_Body" Type="InArgument(x:String)" />
-    <x:Property Name="in_Subject" Type="InArgument(x:String)" />
-    <x:Property Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
-  </x:Members>
-  <mva:VisualBasic.Settings>
-    <x:Null />
-  </mva:VisualBasic.Settings>
-  <sap2010:WorkflowViewState.IdRef>SendEmail_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
       <x:String>System.Activities</x:String>
@@ -67,39 +55,43 @@
       <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
       <AssemblyReference>System.ServiceModel</AssemblyReference>
       <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
-      <AssemblyReference>Microsoft.VisualStudio.Services.Common</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="SendEmail" sap2010:WorkflowViewState.IdRef="Sequence_1">
-    <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Sending email to &quot;+in_Email_ID]" />
-    <TryCatch DisplayName="Try catch" sap2010:WorkflowViewState.IdRef="TryCatch_1">
-      <TryCatch.Try>
-        <ui:SendMail Bcc="{x:Null}" Cc="{x:Null}" From="{x:Null}" MailMessage="{x:Null}" Name="{x:Null}" TimeoutMS="{x:Null}" Body="[in_Body]" DisplayName="Send SMTP Mail Message" Email="[in_Config(&quot;AdminEmail&quot;).ToString]" EnableSSL="True" sap2010:WorkflowViewState.IdRef="SendMail_1" IsBodyHtml="False" Password="[in_Config(&quot;AdminEmailPassword&quot;).ToString]" Port="465" SecureConnection="SslOnConnect" Server="smtp.gmail.com" Subject="[in_Subject]" To="[in_Email_ID]">
-          <ui:SendMail.Files>
-            <scg:List x:TypeArguments="InArgument(x:String)" Capacity="4">
-              <InArgument x:TypeArguments="x:String">[in_AttachPath]</InArgument>
-            </scg:List>
-          </ui:SendMail.Files>
-        </ui:SendMail>
-      </TryCatch.Try>
-      <TryCatch.Catches>
-        <Catch x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="Catch`1_1">
-          <ActivityAction x:TypeArguments="s:Exception">
-            <ActivityAction.Argument>
-              <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
-            </ActivityAction.Argument>
-            <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="Unable to send email, please check details username or password" />
-          </ActivityAction>
-        </Catch>
-      </TryCatch.Catches>
-    </TryCatch>
-    <sads:DebugSymbol.Symbol>d1BDOlxVc2Vyc1xTYW15YWtcRGVza3RvcFxVaVBhdGgtQXR0ZW5kYW5jZS1GcmFtZXdvcmstVUFGXEZyYW1ld29ya1xTZW5kRW1haWwueGFtbA9JA2EOAgEBSgVKogECARRLBV8QAgECSnJKnwECARVNCVMXAgEFWw1bvgECAQNN2ANN5wMCARJQNlBFAgEQTYQBTY8BAgEOTcYDTdQDAgEMTbsBTekBAgEKTYADTYUDAgEJTa0DTb0DAgEITcQCTfoCAgEGW3pbuwECAQQ=</sads:DebugSymbol.Symbol>
-  </Sequence>
+  <TryCatch DisplayName="Try catch" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+    <TryCatch.Try>
+      <Sequence DisplayName="ResetFramework" sap2010:WorkflowViewState.IdRef="Sequence_1">
+        <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="Resetting Framework" />
+        <ui:WriteTextFile DisplayName="Write text file" FileName="[Environment.CurrentDirectory.ToString+&quot;\settings.json&quot;]" sap2010:WorkflowViewState.IdRef="WriteTextFile_1" Text="[&quot;{&quot;&quot;init&quot;&quot;:&quot;&quot;false&quot;&quot;}&quot;]" />
+        <ui:Delete ContinueOnError="{x:Null}" sap2010:WorkflowViewState.IdRef="Delete_1" Path="[Environment.CurrentDirectory.ToString+&quot;\Data\Transactions.xlsx&quot;]" />
+        <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="Resetting Complete! Please re;aunch framework to setup again." />
+      </Sequence>
+    </TryCatch.Try>
+    <TryCatch.Catches>
+      <Catch x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+        <ActivityAction x:TypeArguments="s:Exception">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+          </ActivityAction.Argument>
+          <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Warn" Message="[&quot;Unable to reset framework!&quot;+exception.Message]" />
+        </ActivityAction>
+      </Catch>
+    </TryCatch.Catches>
+    <sads:DebugSymbol.Symbol>d1VDOlxVc2Vyc1xTYW15YWtcRGVza3RvcFxVaVBhdGgtQXR0ZW5kYW5jZS1GcmFtZXdvcmstVUFGXEZyYW1ld29ya1xSZXNldEZyYW1ld29yay54YW1sDTwDUA4CAQE+B0MSAgEFSwtLtwECAQI/CT+OAQIBDUAJQI0CAgEKQQlBrwECAQhCCUK4AQIBBkt4S7QBAgEDP3Y/iwECAQ5AvgFAigICAQxAQkCGAQIBC0FfQawBAgEJQnZCtQECAQc=</sads:DebugSymbol.Symbol>
+  </TryCatch>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
-      <sap2010:ViewStateData Id="LogMessage_1" sap:VirtualizedContainerService.HintSize="417.6,92.8" />
-      <sap2010:ViewStateData Id="SendMail_1" sap:VirtualizedContainerService.HintSize="313.6,145.6" />
-      <sap2010:ViewStateData Id="LogMessage_2" sap:VirtualizedContainerService.HintSize="313.6,92.8" />
+      <sap2010:ViewStateData Id="LogMessage_1" sap:VirtualizedContainerService.HintSize="313.6,92.8" />
+      <sap2010:ViewStateData Id="WriteTextFile_1" sap:VirtualizedContainerService.HintSize="313.6,88" />
+      <sap2010:ViewStateData Id="Delete_1" sap:VirtualizedContainerService.HintSize="313.6,22.4" />
+      <sap2010:ViewStateData Id="LogMessage_4" sap:VirtualizedContainerService.HintSize="313.6,92.8" />
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="336,540.8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="LogMessage_3" sap:VirtualizedContainerService.HintSize="313.6,92.8" />
       <sap2010:ViewStateData Id="Catch`1_1" sap:VirtualizedContainerService.HintSize="403.2,22.4">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -108,15 +100,8 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="TryCatch_1" sap:VirtualizedContainerService.HintSize="417.6,377.6" />
-      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="440,635.2">
-        <sap:WorkflowViewStateService.ViewState>
-          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-          </scg:Dictionary>
-        </sap:WorkflowViewStateService.ViewState>
-      </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="SendEmail_1" sap:VirtualizedContainerService.HintSize="480,715.2" />
+      <sap2010:ViewStateData Id="TryCatch_1" sap:VirtualizedContainerService.HintSize="417.6,772.8" />
+      <sap2010:ViewStateData Id="ResetFramework_1" sap:VirtualizedContainerService.HintSize="457.6,892.8" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

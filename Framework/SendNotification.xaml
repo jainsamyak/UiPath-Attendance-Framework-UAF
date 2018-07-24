@@ -137,6 +137,7 @@
                       <InArgument x:TypeArguments="x:String" x:Key="in_Email_ID">[row("Email").ToString]</InArgument>
                       <InArgument x:TypeArguments="x:String" x:Key="in_Body">[message]</InArgument>
                       <InArgument x:TypeArguments="x:String" x:Key="in_Subject">Attendance Update</InArgument>
+                      <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
                     </ui:InvokeWorkflowFile.Arguments>
                   </ui:InvokeWorkflowFile>
                   <ui:Delete ContinueOnError="{x:Null}" sap2010:WorkflowViewState.IdRef="Delete_1" Path="[in_Config(&quot;Output Directory&quot;).ToString+&quot;temp&quot;+row(&quot;ID&quot;).ToString+&quot;.xlsx&quot;]" />
@@ -148,7 +149,7 @@
         </ActivityAction>
       </ui:ForEachRow.Body>
     </ui:ForEachRow>
-    <sads:DebugSymbol.Symbol>d2BDOlxVc2Vyc1xTYW15YWtcRG9jdW1lbnRzXFVpUGF0aFxVaVBhdGgtQXR0ZW5kYW5jZS1GcmFtZXdvcmstVUFGXEZyYW1ld29ya1xTZW5kTm90aWZpY2F0aW9uLnhhbWwxSAOYAQ4CAQFOBU6HAQIBPU8FWiACATRbBVvJBwIBMVwFZxICASloBWjTAQIBJWkFlgEVAgECTnJOhAECAT5PxgFP2AECATtVC1cWAgE1WyJbPQIBMlx4XI0BAgEwYgtkFgIBKmhRaJ8BAgEoaB5oKgIBJmkeaSsCASNvC5MBFgIBA1YNVrYBAgE2Yw1jxQICAStwDZIBEgIBBFY8VkkCATlWnAFWoAECAThWqwFWswECATdjmAFjqwECAS5jtgFj0QECASxwG3CeAQIBBXIRkAEcAgEGdhN7IgIBHnwTfMwCAgEYfROEARwCARSFARONASsCAQyOAROOAeABAgEKjwETjwGgAQIBB3o+ekMCASF4QnhbAgEffMMBfMcBAgEdfD58WQIBG3ytAXy1AQIBGnzVAXzJAgIBGYIBPoIBqgECARd/P39IAgEVigFOigFXAgESiwFRiwFiAgERiAFUiAGeAQIBEIkBUokBaQIBD4cBTocBZAIBDoUBxAGFAd4BAgENjgFpjgHdAQIBC48BMI8BSwIBCA==</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d1dDOlxVc2Vyc1xTYW15YWtcRGVza3RvcFxVaVBhdGgtQXR0ZW5kYW5jZS1GcmFtZXdvcmstVUFGXEZyYW1ld29ya1xTZW5kTm90aWZpY2F0aW9uLnhhbWwySAOZAQ4CAQFOBU6HAQIBP08FWiACATZbBVvJBwIBM1wFZxICAStoBWjTAQIBJ2kFlwEVAgECTnJOhAECAUBPxgFP2AECAT1VC1cWAgE3WyJbPQIBNFx4XI0BAgEyYgtkFgIBLGhRaJ8BAgEqaB5oKgIBKGkeaSsCASVvC5QBFgIBA1YNVrYBAgE4Yw1jxQICAS1wDZMBEgIBBFY8VkkCATtWnAFWoAECATpWqwFWswECATljmAFjqwECATBjtgFj0QECAS5wG3CeAQIBBXIRkQEcAgEGdhN7IgIBIHwTfMwCAgEafROEARwCARaFAROOASsCAQyPAROPAeABAgEKkAETkAGgAQIBB3o+ekMCASN4QnhbAgEhfMMBfMcBAgEffD58WQIBHXytAXy1AQIBHHzVAXzJAgIBG4IBPoIBqgECARl/P39IAgEXigFOigFXAgEUiwFRiwFiAgETiAFUiAGeAQIBEokBUokBaQIBEYcBTocBZAIBEIwBaowBdQIBDoUBxAGFAd4BAgENjwFpjwHdAQIBC5ABMJABSwIBCA==</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -202,7 +203,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="SendNotification_1" sap:VirtualizedContainerService.HintSize="579.2,2462.4" />
+      <sap2010:ViewStateData Id="SendNotification_1" sap:VirtualizedContainerService.HintSize="579.2,2382.4" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

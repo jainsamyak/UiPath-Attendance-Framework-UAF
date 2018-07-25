@@ -63,7 +63,7 @@
         <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="Resetting Framework" />
         <ui:WriteTextFile DisplayName="Write text file" FileName="[Environment.CurrentDirectory.ToString+&quot;\settings.json&quot;]" sap2010:WorkflowViewState.IdRef="WriteTextFile_1" Text="[&quot;{&quot;&quot;init&quot;&quot;:&quot;&quot;false&quot;&quot;}&quot;]" />
         <ui:Delete ContinueOnError="{x:Null}" sap2010:WorkflowViewState.IdRef="Delete_1" Path="[Environment.CurrentDirectory.ToString+&quot;\Data\Transactions.xlsx&quot;]" />
-        <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="Resetting Complete! Please re;aunch framework to setup again." />
+        <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="Resetting Complete! Please relaunch framework to setup again." />
       </Sequence>
     </TryCatch.Try>
     <TryCatch.Catches>
@@ -100,8 +100,8 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="TryCatch_1" sap:VirtualizedContainerService.HintSize="417.6,772.8" />
-      <sap2010:ViewStateData Id="ResetFramework_1" sap:VirtualizedContainerService.HintSize="457.6,892.8" />
+      <sap2010:ViewStateData Id="TryCatch_1" sap:VirtualizedContainerService.HintSize="417.6,812.8" />
+      <sap2010:ViewStateData Id="ResetFramework_1" sap:VirtualizedContainerService.HintSize="457.6,932.8" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

@@ -92,7 +92,6 @@
           <Sequence DisplayName="Get Local Settings" sap2010:WorkflowViewState.IdRef="Sequence_5">
             <Sequence.Variables>
               <Variable x:TypeArguments="sd:DataTable" Name="configTable" />
-              <Variable x:TypeArguments="x:String" Name="settings_json" />
             </Sequence.Variables>
             <ui:ReadRange Range="{x:Null}" AddHeaders="True" DataTable="[configTable]" DisplayName="Read range settings" sap2010:WorkflowViewState.IdRef="ReadRange_2" SheetName="[sheet]" WorkbookPath="[in_configFile]" />
             <ui:ForEachRow DataTable="[configTable]" DisplayName="For each row" sap2010:WorkflowViewState.IdRef="ForEachRow_2">
@@ -128,7 +127,7 @@
         <InArgument x:TypeArguments="s:String[]">[System.IO.Directory.GetDirectories(out_Config("Input Directory").ToString)]</InArgument>
       </Assign.Value>
     </Assign>
-    <sads:DebugSymbol.Symbol>d19DOlxVc2Vyc1xTYW15YWtcRG9jdW1lbnRzXFVpUGF0aFxVaVBhdGgtQXR0ZW5kYW5jZS1GcmFtZXdvcmstVUFGXEZyYW1ld29ya1xJbml0QWxsU2V0dGluZ3MueGFtbBcBowEB0gEBAwFqAXsBAk0DhAEOAgEBTgVVDgIBGlYFehICAQd7BYIBDgIBAlNKU20CAR1QS1BXAgEbVo0BVqABAgEYXAt3FgIBCIABMoABfgIBBX0zfUACAQNhDWHdAQIBEWINdh0CAQlhSGFXAgEWYbIBYbsBAgEUYckBYdoBAgESYiZiNQIBD2gTcxgCAQpoIWhiAgELahdxIAIBDG9Cb1ACAQ5sQ2xqAgEN</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d1ZDOlxVc2Vyc1xTYW15YWtcRGVza3RvcFxVaVBhdGgtQXR0ZW5kYW5jZS1GcmFtZXdvcmstVUFGXEZyYW1ld29ya1xJbml0QWxsU2V0dGluZ3MueGFtbBcBowEB0gEBAwFqAXsBAk0DgwEOAgEBTgVVDgIBGlYFeRICAQd6BYEBDgIBAlNKU20CAR1QS1BXAgEbVo0BVqABAgEYXAt2FgIBCH8yf34CAQV8M3xAAgEDYA1g3QECARFhDXUdAgEJYEhgVwIBFmCyAWC7AQIBFGDJAWDaAQIBEmEmYTUCAQ9nE3IYAgEKZyFnYgIBC2kXcCACAQxuQm5QAgEOa0NragIBDQ==</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -162,7 +161,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="GetAllSettings_1" sap:VirtualizedContainerService.HintSize="595.2,1493.6" />
+      <sap2010:ViewStateData Id="GetAllSettings_1" sap:VirtualizedContainerService.HintSize="595.2,1253.6" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

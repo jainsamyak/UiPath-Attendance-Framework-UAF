@@ -93,7 +93,6 @@
                   <Sequence DisplayName="Body" sap2010:WorkflowViewState.IdRef="Sequence_3">
                     <Sequence.Variables>
                       <Variable x:TypeArguments="x:Double" Name="total" />
-                      <Variable x:TypeArguments="x:Double" Name="overall" />
                     </Sequence.Variables>
                     <Assign sap2010:WorkflowViewState.IdRef="Assign_1">
                       <Assign.To>
@@ -157,7 +156,7 @@
         </ActivityAction>
       </ui:ExcelApplicationScope.Body>
     </ui:ExcelApplicationScope>
-    <sads:DebugSymbol.Symbol>d2lDOlxVc2Vyc1xTYW15YWtcRG9jdW1lbnRzXFVpUGF0aFxVaVBhdGgtQXR0ZW5kYW5jZS1GcmFtZXdvcmstVUFGXEZyYW1ld29ya1xDYWxjdWxhdGUgU3VtbWFyeSBPdmVyYWxsLnhhbWwqSAOhAQ4CAQFJBUmVAQIBOEoFnwEgAgECSXJJkgECATlKxgFK2AECATZQC5wBFgIBA1UNVbcBAgExVg1WrgICAS1XDZoBHQIBCZsBDZsBwQECAQRVPFVKAgE0VZ0BVaEBAgEzVawBVbQBAgEyVpgBVqEBAgEwVqwBVroBAgEuVyZXNAIBK10TlwEeAgEKmwG6AZsBvgECAQibAT2bAUsCAQabAaQBmwGsAQIBBWIVaR4CASdqFXEeAgEjchWOAR8CARCPARWWAR4CAQtnP2eFAQIBKmRAZEwCAShvQG9BAgEmbEFsSAIBJHYqdo8BAgEidxeNASICARGUAUCUAWICAQ2RAUGRAYABAgEMeBl8KQIBG30ZhAEiAgEXhQEZjAEiAgESekx6WAIBIHi5AXjAAQIBHnhceGoCARyCAUSCAVYCARp/RX9MAgEYigFDigFRAgEVhwFEhwFQAgET</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d2BDOlxVc2Vyc1xTYW15YWtcRGVza3RvcFxVaVBhdGgtQXR0ZW5kYW5jZS1GcmFtZXdvcmstVUFGXEZyYW1ld29ya1xDYWxjdWxhdGUgU3VtbWFyeSBPdmVyYWxsLnhhbWwqSAOgAQ4CAQFJBUmVAQIBOEoFngEgAgECSXJJkgECATlKxgFK2AECATZQC5sBFgIBA1UNVbcBAgExVg1WrgICAS1XDZkBHQIBCZoBDZoBwQECAQRVPFVKAgE0VZ0BVaEBAgEzVawBVbQBAgEyVpgBVqEBAgEwVqwBVroBAgEuVyZXNAIBK10TlgEeAgEKmgG6AZoBvgECAQiaAT2aAUsCAQaaAaQBmgGsAQIBBWEVaB4CASdpFXAeAgEjcRWNAR8CARCOARWVAR4CAQtmP2aFAQIBKmNAY0wCAShuQG5BAgEma0FrSAIBJHUqdY8BAgEidheMASICARGTAUCTAWICAQ2QAUGQAYABAgEMdxl7KQIBG3wZgwEiAgEXhAEZiwEiAgESeUx5WAIBIHe5AXfAAQIBHndcd2oCARyBAUSBAVYCARp+RX5MAgEYiQFDiQFRAgEVhgFEhgFQAgET</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -202,7 +201,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Calculate_Summary_Overall_1" sap:VirtualizedContainerService.HintSize="616,2028.8" />
+      <sap2010:ViewStateData Id="Calculate_Summary_Overall_1" sap:VirtualizedContainerService.HintSize="616,1988.8" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

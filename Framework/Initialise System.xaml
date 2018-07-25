@@ -117,10 +117,6 @@
                 <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
               </ActivityAction.Argument>
               <Sequence DisplayName="Do" sap2010:WorkflowViewState.IdRef="Sequence_2">
-                <Sequence.Variables>
-                  <Variable x:TypeArguments="x:String" Name="op" />
-                  <Variable x:TypeArguments="sd:DataTable" Name="opdt" />
-                </Sequence.Variables>
                 <ui:ExcelWriteRange AddHeaders="True" DataTable="[dt_Config]" DisplayName="Write Range" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_2" SheetName="Settings" StartingCell="A1" />
               </Sequence>
             </ActivityAction>
@@ -162,7 +158,7 @@
         </ActivityAction>
       </Catch>
     </TryCatch.Catches>
-    <sads:DebugSymbol.Symbol>d2FDOlxVc2Vyc1xTYW15YWtcRG9jdW1lbnRzXFVpUGF0aFxVaVBhdGgtQXR0ZW5kYW5jZS1GcmFtZXdvcmstVUFGXEZyYW1ld29ya1xJbml0aWFsaXNlIFN5c3RlbS54YW1sVz8DpgEOAgEBQQeWARICAQieAQuhARYCAQJHPEdPAgEJSwlL7gECAWhMCVAaAgFjUQlVGgIBXlYJWhoCAVlbCV8aAgFTYAlkGgIBTmUJaRoCAUlqCWrqCgIBRmsJa9MBAgFCbAls2QECAT5tCW3RAQIBOm4JbtMBAgE2bwlvzwECATJwCXDNAQIBLnEJgAEkAgEmgQEJkwEkAgEPlAEJlAGMAgIBDJUBCZUBoQICAQqfAQ2fAbwBAgEFoAENoAHlAQIBA0ueAUvcAQIBaUyQAUy1AQIBZ048TkYCAWVMvAFMzwECAWRRkAFRygECAWJTPFNGAgFgUdEBUeQBAgFfVpABVsUBAgFdWDxYSgIBW1bMAVbiAQIBWlt9W7EBAgFYW7oBW+8BAgFXXTxdRwIBVVv2AVuJAgIBVGCQAWC+AQIBUmI8YkcCAVBgxQFg1gECAU9lkAFlvwECAU1nPGdIAgFLZcYBZdgBAgFKaiZqMwIBR2t5a4YBAgFEazRrbgIBQ2x/bIwBAgFAbDRsdAIBP213bYQBAgE8bTRtbAIBO255boYBAgE4bjRubgIBN291b4IBAgE0bzRvagIBM3BzcIABAgEwcDRwaAIBL3HKAXGRAgIBLXcPfRoCASeBAbQBgQGBAgIBJYcBD5ABGgIBEJQBvgGUAYkCAgEOlAFClAGGAQIBDZUBngGVAY8CAgELnwF7nwG5AQIBBqABogGgAdMBAgEEfBF8xgECASiLARGLAaQBAgEhjAERjAGhAQIBHY0BEY0BigsCARqOARGOAfYBAgEWjwERjwHQAQIBEXy/AXzDAQIBLHxBfE4CASp8pwF8sQECASmLASmLAS0CASSLAZIBiwGhAQIBI4sBhAGLAYwBAgEijAEpjAEtAgEgjAGSAYwBngECAR+MAYQBjAGMAQIBHo0BLo0BRwIBG44BkAGOAakBAgEYjgE8jgGFAQIBF48ByQGPAc0BAgEVjwFBjwFaAgETjwGzAY8BuwECARI=</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d1hDOlxVc2Vyc1xTYW15YWtcRGVza3RvcFxVaVBhdGgtQXR0ZW5kYW5jZS1GcmFtZXdvcmstVUFGXEZyYW1ld29ya1xJbml0aWFsaXNlIFN5c3RlbS54YW1sVz8DogEOAgEBQQeSARICAQiaAQudARYCAQJHPEdPAgEJSwlL7gECAWhMCVAaAgFjUQlVGgIBXlYJWhoCAVlbCV8aAgFTYAlkGgIBTmUJaRoCAUlqCWrqCgIBRmsJa9MBAgFCbAls2QECAT5tCW3RAQIBOm4JbtMBAgE2bwlvzwECATJwCXDNAQIBLnEJfCQCASZ9CY8BJAIBD5ABCZABjAICAQyRAQmRAaECAgEKmwENmwG8AQIBBZwBDZwB5QECAQNLngFL3AECAWlMkAFMtQECAWdOPE5GAgFlTLwBTM8BAgFkUZABUcoBAgFiUzxTRgIBYFHRAVHkAQIBX1aQAVbFAQIBXVg8WEoCAVtWzAFW4gECAVpbfVuxAQIBWFu6AVvvAQIBV108XUcCAVVb9gFbiQICAVRgkAFgvgECAVJiPGJHAgFQYMUBYNYBAgFPZZABZb8BAgFNZzxnSAIBS2XGAWXYAQIBSmomajMCAUdreWuGAQIBRGs0a24CAUNsf2yMAQIBQGw0bHQCAT9td22EAQIBPG00bWwCATtueW6GAQIBOG40bm4CATdvdW+CAQIBNG80b2oCATNwc3CAAQIBMHA0cGgCAS9xygFxkQICAS13D3kaAgEnfbQBfYECAgElgwEPjAEaAgEQkAG+AZABiQICAQ6QAUKQAYYBAgENkQGeAZEBjwICAQubAXubAbkBAgEGnAGiAZwB0wECAQR4EXjGAQIBKIcBEYcBpAECASGIARGIAaEBAgEdiQERiQGKCwIBGooBEYoB9gECARaLARGLAdABAgEReL8BeMMBAgEseEF4TgIBKninAXixAQIBKYcBKYcBLQIBJIcBkgGHAaEBAgEjhwGEAYcBjAECASKIASmIAS0CASCIAZIBiAGeAQIBH4gBhAGIAYwBAgEeiQEuiQFHAgEbigGQAYoBqQECARiKATyKAYUBAgEXiwHJAYsBzQECARWLAUGLAVoCAROLAbMBiwG7AQIBEg==</sads:DebugSymbol.Symbol>
   </TryCatch>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -228,8 +224,8 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="TryCatch_1" sap:VirtualizedContainerService.HintSize="454.4,3174.4" />
-      <sap2010:ViewStateData Id="Initialise_System_1" sap:VirtualizedContainerService.HintSize="494.4,3374.4" />
+      <sap2010:ViewStateData Id="TryCatch_1" sap:VirtualizedContainerService.HintSize="454.4,3054.4" />
+      <sap2010:ViewStateData Id="Initialise_System_1" sap:VirtualizedContainerService.HintSize="494.4,3134.4" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

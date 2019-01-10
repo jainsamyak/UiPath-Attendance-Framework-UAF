@@ -1,1 +1,9 @@
+title: Samyak Jain - UiPath-Attendance-Framework-UAF
+email: jainsamyak330@gmail.com
+description: An attendance management framework built on UiPath.
+url: "https://jainsamyak.github.io/" 
+baseurl: /UiPath-Attendance-Framework-UAF
+github_username: jainsamyak
+
+# Build settings
 theme: jekyll-theme-cayman
